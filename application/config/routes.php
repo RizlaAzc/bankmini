@@ -57,16 +57,16 @@ $route['admin'] = 'admin/C_Login';
 
 $route['admin/dashboard'] = 'admin/C_Dashboard';
 
-$route['kelas'] = 'admin/data/C_Kelas';
+// $route['kelas'] = 'admin/data/C_Kelas';
 $route['edit_kelas/(:any)'] = 'admin/data/C_Kelas/edit/$1';
 
-$route['spp'] = 'admin/data/C_SPP';
+// $route['spp'] = 'admin/data/C_SPP';
 $route['edit_spp/(:any)'] = 'admin/data/C_SPP/edit/$1';
 
-$route['petugas'] = 'admin/data/C_Petugas';
+// $route['petugas'] = 'admin/data/C_Petugas';
 $route['edit_petugas/(:any)'] = 'admin/data/C_Petugas/edit/$1';
 
-$route['siswa'] = 'admin/data/C_Siswa';
+// $route['siswa'] = 'admin/data/C_Siswa';
 $route['edit_siswa/(:any)'] = 'admin/data/C_Siswa/edit/$1';
 
 $route['transaksi'] = 'admin/payment/C_Transaksi';
@@ -80,5 +80,10 @@ $route['registrasi'] = 'C_Auth/registrasi';
 $route['logout'] = 'C_Auth/logout';
 
 $route['dashboard'] = 'C_Dashboard';
+
+$route['kelas'] = 'data/C_kelas';
+$route['petugas'] = 'data/C_petugas';
+$route['siswa'] = 'data/C_siswa';
+$route['spp'] = 'data/C_spp';
 
 $route['histori_pembayaran'] = 'C_Histori';

@@ -38,6 +38,7 @@ class C_Auth extends CI_Controller {
 					$this->session->set_userdata('email', $hasil_admin->email);
 					$this->session->set_userdata('username', $hasil_admin->username);
 					$this->session->set_userdata('petugas_id', $hasil_admin->petugas_id);
+					$this->session->set_userdata('level', $hasil_admin->level);
 					redirect('dashboard');
 					
 				} else {
@@ -61,6 +62,7 @@ class C_Auth extends CI_Controller {
 							$this->session->set_userdata('email', $hasil_petugas->email);
 							$this->session->set_userdata('username', $hasil_petugas->username);
 							$this->session->set_userdata('petugas_id', $hasil_petugas->petugas_id);
+							$this->session->set_userdata('level', $hasil_petugas->level);
 							redirect('dashboard');
 							
 						} else {
