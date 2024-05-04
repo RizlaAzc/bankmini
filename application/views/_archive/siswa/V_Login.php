@@ -6,22 +6,24 @@
               <div class="brand-logo">
                 <img src="<?= base_url('assets/images/smk.png') ?>" alt="logo">
               </div>
-              <h4>Aplikasi Pembayaran SPP</h4>
-              <h6 class="fw-light">Sign in to continue.</h6>
+              <h4>Bank Mini</h4>
+              <h6 class="fw-light">Login untuk melanjutkan.</h6>
 
-              <?= $this->session->flashdata('message'); ?>
+              <?= $this->session->flashdata('a'); ?>
               
-              <form action="<?= base_url('C_Login/login') ?>" method="post" class="pt-3">
+              <form action="<?= base_url('login') ?>" method="post" class="pt-3">
                 <div class="form-group">
-                  <input type="text" name="nisn" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="NISN">
+                  <input type="text" name="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
                 </div>
                 <div class="form-group">
-                  <input type="password" name="nis" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="NIS">
+                  <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
                 </div>
                 <div class="mt-3">
-                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >SIGN IN</button>
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >Login</button>
                 </div>
               </form>
+              <br>
+              <h6>Belum punya akun ?<a href="<?= base_url('registrasi') ?>"> Klik disini</a></h6>
             </div>
           </div>
         </div>

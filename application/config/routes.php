@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'C_Login';
+$route['default_controller'] = 'C_Auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -73,7 +73,11 @@ $route['transaksi'] = 'admin/payment/C_Transaksi';
 $route['histori'] = 'admin/payment/C_Histori';
 
 
-$route[''] = 'C_Login';
+$route[''] = 'C_Auth';
+
+$route['login'] = 'C_Auth/login';
+$route['registrasi'] = 'C_Auth/registrasi';
+$route['logout'] = 'C_Auth/logout';
 
 $route['dashboard'] = 'C_Dashboard';
 

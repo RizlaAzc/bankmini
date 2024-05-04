@@ -6,7 +6,7 @@ class C_Dashboard extends CI_Controller {
 	public function __construct() {
 
 		parent::__construct();
-		if (!$this->session->userdata('nisn')) {
+		if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Please login!</div>');
             redirect('');
         }
@@ -30,17 +30,16 @@ class C_Dashboard extends CI_Controller {
 	 */
 	public function index()
 	{
-		$profil['profil'] = $this->db->get_where('siswa', ['nisn' => $this->session->userdata('nisn')])->row_array();
+		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
 		$title['title'] = 'Dashboard - Pembayaran SPP';
 		
 		$year['year'] = date('Y');
 
-		$this->load->view('siswa/_partials/_head', $title);
-		$this->load->view('siswa/_partials/_navbar', $profil);
-		$this->load->view('siswa/_partials/_settings-panel');
-		$this->load->view('siswa/_partials/_sidebar');
-		$this->load->view('siswa/V_Dashboard');
-		$this->load->view('siswa/_partials/_footer', $year);
+		$this->load->view('_partials/_head', $title);
+		$this->load->view('_partials/_navbar', $profil);
+		$this->load->view('_partials/_sidebar');
+		$this->load->view('V_Dashboard');
+		$this->load->view('_partials/_footer', $year);
 	}
 }
