@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Bulan Mei 2024 pada 18.14
+-- Waktu pembuatan: 04 Bulan Mei 2024 pada 21.05
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.3.14
 
@@ -79,19 +79,21 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `id_petugas`, `nisn`, `tgl_bayar`, `b
 
 CREATE TABLE `petugas` (
   `id_petugas` int(11) NOT NULL,
-  `username` varchar(25) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `nama_petugas` varchar(35) NOT NULL,
-  `level` enum('Admin','Petugas') NOT NULL
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `nama_lengkap` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `level` enum('Admin','Petugas') NOT NULL,
+  `waktu_dibuat` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `petugas`
 --
 
-INSERT INTO `petugas` (`id_petugas`, `username`, `password`, `nama_petugas`, `level`) VALUES
-(0, 'admin', 'admin123', 'admin spp', 'Admin'),
-(1, 'petugas', 'petugas123', 'petugas spp', 'Petugas');
+INSERT INTO `petugas` (`id_petugas`, `username`, `password`, `nama_lengkap`, `email`, `level`, `waktu_dibuat`) VALUES
+(0, 'admin', '$2y$10$oDK6S5LHLMEeajxB2.jN4Od3thtCSQ3NolIkktst32qvdy.NwftK2', 'Admin', 'admin@gmail.com', 'Admin', '2024-05-04 17:23:20'),
+(7, 'tes', '$2y$10$GBfyqvE0z7A5EtC2fDzVzuaFONDFTYkpMRKPji3XQDOJB6EPB9UAO', 'tes', 'tes@gmail.com', 'Petugas', '2024-05-04 17:41:28');
 
 -- --------------------------------------------------------
 
@@ -195,7 +197,7 @@ ALTER TABLE `pembayaran`
 -- AUTO_INCREMENT untuk tabel `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id_petugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_petugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
