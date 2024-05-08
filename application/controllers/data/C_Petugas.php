@@ -9,9 +9,9 @@ class C_Petugas extends CI_Controller {
 		
 		$this->load->model('M_Petugas');
 
-		if (!$this->session->userdata('username')) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Please login!</div>');
-            redirect('admin');
+		if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');
+            redirect('');
         }
 		
 	}
@@ -33,7 +33,7 @@ class C_Petugas extends CI_Controller {
 	 */
 	public function index()
 	{
-		$profil['profil'] = $this->db->get_where('petugas', ['username' => $this->session->userdata('username')])->row_array();
+		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
 		$title['title'] = 'Data Petugas - Pembayaran SPP';
 
@@ -43,12 +43,11 @@ class C_Petugas extends CI_Controller {
 
 		$data['petugas'] = $petugas;
 
-		$this->load->view('admin/_partials/_head', $title);
-		$this->load->view('admin/_partials/_navbar', $profil);
-		$this->load->view('admin/_partials/_settings-panel');
-		$this->load->view('admin/_partials/_sidebar');
-		$this->load->view('admin/data/petugas/V_Petugas', $data);
-		$this->load->view('admin/_partials/_footer', $year);
+		$this->load->view('_partials/_head', $title);
+		$this->load->view('_partials/_navbar', $profil);
+		$this->load->view('_partials/_sidebar');
+		$this->load->view('data/petugas/V_Petugas', $data);
+		$this->load->view('_partials/_footer', $year);
 	}
 
 	public function edit($id)
@@ -124,4 +123,57 @@ class C_Petugas extends CI_Controller {
 
         redirect($_SERVER['HTTP_REFERER']);
     }
+
+	public function excel()
+        {
+            if(isset($_FILES["file"]["name"])){
+                  // upload
+                $file_tmp = $_FILES['file']['tmp_name'];
+                $file_name = $_FILES['file']['name'];
+                $file_size =$_FILES['file']['size'];
+                $file_type=$_FILES['file']['type'];
+                // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
+                
+                $object = PHPExcel_IOFactory::load($file_tmp);
+        
+                foreach($object->getWorksheetIterator() as $worksheet){
+        
+                    $highestRow = $worksheet->getHighestRow();
+                    $highestColumn = $worksheet->getHighestColumn();
+        
+                    for($row=4; $row<=$highestRow; $row++){
+        
+                        $nim = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                        $nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                        $angkatan = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+
+                        $data[] = array(
+                            'nim'          => $nim,
+                            'nama'          =>$nama,
+                            'angkatan'         =>$angkatan,
+                        );
+        
+                    } 
+        
+                }
+        
+                $this->db->insert_batch('mahasiswa', $data);
+        
+                $message = array(
+                    'message'=>'<div class="alert alert-success">Import file excel berhasil disimpan di database</div>',
+                );
+                
+                $this->session->set_flashdata($message);
+                redirect('import');
+            }
+            else
+            {
+                 $message = array(
+                    'message'=>'<div class="alert alert-danger">Import file gagal, coba lagi</div>',
+                );
+                
+                $this->session->set_flashdata($message);
+                redirect('import');
+            }
+        }
 }

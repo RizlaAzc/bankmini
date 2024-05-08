@@ -16,24 +16,24 @@
                       <thead>
                         <tr>
                           <th style="width: 60px;">ID</th>
-                          <th>Username</th>
-                          <th>Password</th>
-                          <th>Nama Petugas</th>
-                          <th>Level</th>
+                          <th>Nama Lengkap</th>
+                          <th>Email</th>
+                          <th>Posisi</th>
+                          <th>Waktu Dibuat</th>
                           <th style="width: 140px;">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        $no = 0;
+                        $no = 1;
                         foreach($petugas as $petugas){
                         ?>
                         <tr>
                           <td><?= $no++ ?></td>
-                          <td><?= $petugas->username ?></td>
-                          <td><?= $petugas->password ?></td>
-                          <td><?= $petugas->nama_petugas ?></td>
+                          <td><?= $petugas->nama_lengkap ?></td>
+                          <td><?= $petugas->email ?></td>
                           <td><?= $petugas->level ?></td>
+                          <td><?= $petugas->waktu_dibuat ?></td>
                           <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_petugas/' . $petugas->id_petugas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Petugas/fungsi_hapus/' . $petugas->id_petugas) ?>">Hapus</a></label></td>
                         </tr>
                         <?php

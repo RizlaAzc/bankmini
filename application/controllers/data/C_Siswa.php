@@ -10,9 +10,9 @@ class C_Siswa extends CI_Controller {
 		$this->load->model('M_Siswa');
 		$this->load->model('M_Kelas');
 
-		if (!$this->session->userdata('username')) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Please login!</div>');
-            redirect('admin');
+		if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');
+            redirect('');
         }
 		
 	}
@@ -34,7 +34,7 @@ class C_Siswa extends CI_Controller {
 	 */
 	public function index()
 	{
-		$profil['profil'] = $this->db->get_where('petugas', ['username' => $this->session->userdata('username')])->row_array();
+		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
 		$title['title'] = 'Data Siswa - Pembayaran SPP';
 
@@ -46,12 +46,11 @@ class C_Siswa extends CI_Controller {
 		$data['siswa'] = $siswa;
 		$data['kelas'] = $kelas;
 
-		$this->load->view('admin/_partials/_head', $title);
-		$this->load->view('admin/_partials/_navbar', $profil);
-		$this->load->view('admin/_partials/_settings-panel');
-		$this->load->view('admin/_partials/_sidebar');
-		$this->load->view('admin/data/siswa/V_Siswa', $data);
-		$this->load->view('admin/_partials/_footer', $year);
+		$this->load->view('_partials/_head', $title);
+		$this->load->view('_partials/_navbar', $profil);
+		$this->load->view('_partials/_sidebar');
+		$this->load->view('data/siswa/V_Siswa', $data);
+		$this->load->view('_partials/_footer', $year);
 	}
 
 	public function edit($id)
