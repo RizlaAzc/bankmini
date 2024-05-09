@@ -11,10 +11,10 @@
                     Tambah Siswa
                   </button>
                   <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
-                  Impor Data
+                  Impor Excel
                   </button>
                     <button type="button" class="badge badge-success text-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Ekspor Data
+                    Ekspor Excel
                     </button>
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
@@ -25,8 +25,8 @@
                           <th class="text-center" style="width: 60px;">No</th>
                           <th>NIS</th>
                           <th>Nama Siswa</th>
-                          <th>Kelas</th>
                           <th>Jenis Kelamin</th>
+                          <th>Kelas</th>
                           <th style="width: 140px;">Aksi</th>
                         </tr>
                       </thead>
@@ -39,9 +39,9 @@
                           <td class="text-center"><?= $no++ ?></td>
                           <td><?= $siswa->nis ?></td>
                           <td><?= $siswa->nama_siswa ?></td>
-                          <td><?= $siswa->kelas ?></td>
                           <td><?= $siswa->jenis_kelamin ?></td>
-                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_siswa/' . $siswa->nis) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Siswa/fungsi_hapus/' . $siswa->nis) ?>">Hapus</a></label></td>
+                          <td><?= $siswa->kelas ?></td>
+                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_siswa/' . $siswa->nis) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('fungsi_hapus_siswa/' . $siswa->nis) ?>">Hapus</a></label></td>
                         </tr>
                         <?php
                         }
@@ -66,48 +66,44 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Tambah Siswa</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="<?= base_url('admin/data/C_Siswa/fungsi_tambah') ?>" method="post">
+              <form action="<?= base_url('tambah_siswa') ?>" method="post">
               <div class="modal-body">
                     <div class="form-group">
-                        <label for="inputAddress" class="form-label">NISN</label>
-                        <input type="text" class="form-control" id="inputAddress" name="nisn" placeholder="12345" required>
+                        <label for="inputAddress" class="form-label">NIS</label>
+                        <input type="text" class="form-control" id="inputAddress" name="nis" placeholder="NIS" required>
                     </div>
                     <div class="form-group">
-                        <label for="inputAddress2" class="form-label">NIS</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="nis" placeholder="12345">
+                        <label for="inputAddress2" class="form-label">Nama Siswa</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" name="nama_siswa" placeholder="Nama Siswa">
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="nama" placeholder="Nama">
+                    <div class="form-group text-center">
+                        <label for="inputAddress2" class="form-label">Jenis Kelamin</label>
+                        <div class="input-group justify-content-center mb-3">
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="jenis_kelamin" value="L"> &nbsp; Laki-Laki
+                          </div>
+                          <div class="input-group-text" style="margin-left: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="jenis_kelamin" value="P"> &nbsp; Perempuan
+                          </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">Kompetensi Keahlian</label>
-                        <select class="form-control" name="id_kelas" id="cars">
-                          <option value="">Pilih Salah Satu</option>
+                    <div class="form-group text-center">
+                        <label for="inputAddress2" class="form-label">Kelas</label>
+                        <div class="input-group justify-content-center mb-3">
                           <?php
                           foreach($kelas as $kelas){
                           ?>
-                          <option value="<?= $kelas->id_kelas ?>"><?= $kelas->kompetensi_keahlian ?></option>
+                          <div class="input-group-text" style="margin: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="<?= $kelas->kelas ?> <?= $kelas->kompetensi_keahlian ?>"> &nbsp; <?= $kelas->kelas ?> <?= $kelas->kompetensi_keahlian ?>
+                          </div>
                           <?php
                           }
                           ?>
-                        </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="alamat" placeholder="Jl. No. RT/RW. Kel. Kec. Kab. Prov">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">No. Telepon</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="no_telp" placeholder="08*********">
-                    </div>
-                    <!-- <div class="form-group">
-                        <label for="inputAddress2" class="form-label">ID SPP</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="id_spp" placeholder="ID SPP">
-                    </div> -->
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
@@ -130,9 +126,9 @@
                       <input type="file" class="form-control" id="inputAddress" name="file" accept=".xls, .xlsx" required>
                       <div class="mt-1">
                         <label for="inputAddress" class="form-label">File yang di upload harus berformat : .xls dan .xlsx</label>
-                                                <!-- <span class="text-secondary">File yang harus diupload : .xls, xlsx</span> -->
-                                            </div>
-                                            <?= form_error('file','<div class="text-danger">','</div>') ?>
+                            <!-- <span class="text-secondary">File yang harus diupload : .xls, xlsx</span> -->
+                        </div>
+                        <?= form_error('file','<div class="text-danger">','</div>') ?>
                   </div>
                 </div>
                 <div class="modal-footer">

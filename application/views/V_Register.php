@@ -14,10 +14,10 @@
                   <label for="" class="form-label">Sebagai :</label>
                   <div class="input-group justify-content-center mb-3">
                     <div class="input-group-text" style="margin-right: 5px;">
-                      <input class="form-check-input mt-0" type="checkbox" name="level" value="Admin"> &nbsp; Admin
+                      <input class="form-check-input mt-0" type="radio" name="level" value="Admin"> &nbsp; Admin
                     </div>
                     <div class="input-group-text" style="margin-left: 5px;">
-                      <input class="form-check-input mt-0" type="checkbox" name="level" value="Petugas"> &nbsp; Petugas
+                      <input class="form-check-input mt-0" type="radio" name="level" value="Petugas"> &nbsp; Petugas
                     </div>
                   </div>
                 </div>

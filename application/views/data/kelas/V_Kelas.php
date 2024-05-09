@@ -15,8 +15,8 @@
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th style="width: 60px;">ID</th>
-                          <th>Nama Kelas</th>
+                          <th class="text-center" style="width: 60px;">ID</th>
+                          <th>Kelas</th>
                           <th>Kompetensi Keahlian</th>
                           <th style="width: 140px;">Aksi</th>
                         </tr>
@@ -27,8 +27,8 @@
                         foreach($kelas as $kelas){
                         ?>
                         <tr>
-                          <td><?= $no++ ?></td>
-                          <td><?= $kelas->nama_kelas ?></td>
+                          <td class="text-center"><?= $no++ ?></td>
+                          <td><?= $kelas->kelas ?></td>
                           <td><?= $kelas->kompetensi_keahlian ?></td>
                           <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_kelas/' . $kelas->id_kelas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Kelas/fungsi_hapus/' . $kelas->id_kelas) ?>">Hapus</a></label></td>
                         </tr>

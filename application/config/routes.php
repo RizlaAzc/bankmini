@@ -86,6 +86,10 @@ $route['petugas'] = 'data/C_petugas';
 $route['siswa'] = 'data/C_siswa';
 $route['spp'] = 'data/C_spp';
 
+$route['tambah_siswa'] = 'data/C_Siswa/fungsi_tambah';
+$route['edit_siswa/(:any)'] = 'data/C_Siswa/edit/$1';
+$route['fungsi_edit_siswa'] = 'data/C_Siswa/fungsi_edit';
+$route['fungsi_hapus_siswa/(:any)'] = 'data/C_Siswa/fungsi_hapus/$1';
 $route['import_siswa'] = 'data/C_Siswa/excel';
 
 $route['histori_pembayaran'] = 'C_Histori';

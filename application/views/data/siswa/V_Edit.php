@@ -8,43 +8,39 @@
                   <h4 class="card-title">Form Edit Siswa</h4>
                   <p class="card-description">
                   </p>
-                  <form action="<?= base_url('admin/data/C_Siswa/fungsi_edit') ?>" method="post" class="forms-sample">
-                    <div class="form-group">
-                      <label for="exampleInputUsername1">NISN</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="nisn" value="<?= $siswa->nisn ?>" placeholder="12345" readonly>
-                    </div>
+                  <form action="<?= base_url('fungsi_edit_siswa') ?>" method="post" class="forms-sample">
                     <div class="form-group">
                       <label for="exampleInputEmail1">NIS</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="nis" value="<?= $siswa->nis ?>" placeholder="12345" readonly>
+                      <input type="text" class="form-control" id="exampleInputUsername1" name="nis" value="<?= $siswa->nis ?>" placeholder="NIS" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Nama</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="nama" value="<?= $siswa->nama ?>" placeholder="Nama">
+                      <label for="exampleInputEmail1">Nama Siswa</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" name="nama_siswa" value="<?= $siswa->nama_siswa ?>" placeholder="Nama Siswa">
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">Kompetensi Keahlian</label>
-                        <select class="form-control" name="id_kelas" id="cars">
-                          <option value="">Pilih Salah Satu</option>
+                    <div class="form-group text-center">
+                        <label for="inputAddress2" class="form-label">Jenis Kelamin</label>
+                        <div class="input-group justify-content-center mb-3">
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="jenis_kelamin" value="L"> &nbsp; Laki-Laki
+                          </div>
+                          <div class="input-group-text" style="margin-left: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="jenis_kelamin" value="P"> &nbsp; Perempuan
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <label for="inputAddress2" class="form-label">Kelas</label>
+                        <div class="input-group justify-content-center mb-3">
                           <?php
                           foreach($kelas as $kelas){
                           ?>
-                          <option value="<?= $kelas->id_kelas ?>"><?= $kelas->kompetensi_keahlian ?></option>
+                          <div class="input-group-text" style="margin: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="<?= $kelas->kelas ?> <?= $kelas->kompetensi_keahlian ?>"> &nbsp; <?= $kelas->kelas ?> <?= $kelas->kompetensi_keahlian ?>
+                          </div>
                           <?php
                           }
                           ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Alamat</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="alamat" value="<?= $siswa->alamat ?>" placeholder="Jl. No. RT/RW. Kel. Kec. Kab. Prov">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">No. Telepon</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="no_telp" value="<?= $siswa->no_telp ?>" placeholder="08**********">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">ID SPP</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="id_spp" value="<?= $siswa->id_spp ?>" placeholder="12345" readonly>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary me-2">Submit</button>
                     <a href="<?= base_url('siswa') ?>" class="btn btn-light">Cancel</a>

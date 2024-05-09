@@ -55,7 +55,7 @@ class C_Siswa extends CI_Controller {
 
 	public function edit($id)
 	{
-		$profil['profil'] = $this->db->get_where('petugas', ['username' => $this->session->userdata('username')])->row_array();
+		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
 		$title['title'] = 'Edit Siswa - Pembayaran SPP';
 
@@ -67,34 +67,27 @@ class C_Siswa extends CI_Controller {
 		$data['siswa'] = $siswa;
 		$data['kelas'] = $kelas;
 
-		$this->load->view('admin/_partials/_head', $title);
-		$this->load->view('admin/_partials/_navbar', $profil);
-		$this->load->view('admin/_partials/_settings-panel');
-		$this->load->view('admin/_partials/_sidebar');
-		$this->load->view('admin/data/siswa/V_Edit', $data);
-		$this->load->view('admin/_partials/_footer', $year);
+		$this->load->view('_partials/_head', $title);
+		$this->load->view('_partials/_navbar', $profil);
+		$this->load->view('_partials/_sidebar');
+		$this->load->view('data/siswa/V_Edit', $data);
+		$this->load->view('_partials/_footer', $year);
 	}
 
 	public function fungsi_tambah()
     {
-        $profil['profil'] = $this->db->get_where('petugas', ['username' => $this->session->userdata('username')])->row_array();
+        $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $nisn = $this->input->post('nisn');
         $nis = $this->input->post('nis');
-        $nama = $this->input->post('nama');
-        $id_kelas = $this->input->post('id_kelas');
-        $alamat = $this->input->post('alamat');
-        $no_telp = $this->input->post('no_telp');
-        // $id_spp = $this->input->post('id_spp');
+        $nama_siswa = $this->input->post('nama_siswa');
+        $jenis_kelamin = $this->input->post('jenis_kelamin');
+        $kelas = $this->input->post('kelas');
 
         $ArrInsert = array(
-            'nisn' => $nisn,
             'nis' => $nis,
-            'nama' => $nama,
-            'id_kelas' => $id_kelas,
-            'alamat' => $alamat,
-            'no_telp' => $no_telp,
-            'id_spp' => $nisn
+            'nama_siswa' => $nama_siswa,
+            'jenis_kelamin' => $jenis_kelamin,
+            'kelas' => $kelas
         );
 
         $this->M_Siswa->insertDataSiswa($ArrInsert);
@@ -104,34 +97,28 @@ class C_Siswa extends CI_Controller {
 
 	public function fungsi_edit()
     {
-        $profil['profil'] = $this->db->get_where('petugas', ['username' => $this->session->userdata('username')])->row_array();
+        $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $nisn = $this->input->post('nisn');
         $nis = $this->input->post('nis');
-        $nama = $this->input->post('nama');
-        $id_kelas = $this->input->post('id_kelas');
-        $alamat = $this->input->post('alamat');
-        $no_telp = $this->input->post('no_telp');
-        $id_spp = $this->input->post('id_spp');
+        $nama_siswa = $this->input->post('nama_siswa');
+        $jenis_kelamin = $this->input->post('jenis_kelamin');
+        $kelas = $this->input->post('kelas');
 
         $ArrUpdate = array(
-            'nisn' => $nisn,
             'nis' => $nis,
-            'nama' => $nama,
-            'id_kelas' => $id_kelas,
-            'alamat' => $alamat,
-            'no_telp' => $no_telp,
-            'id_spp' => $id_spp
+            'nama_siswa' => $nama_siswa,
+            'jenis_kelamin' => $jenis_kelamin,
+            'kelas' => $kelas
         );
 
-        $this->M_Siswa->updateDataSiswa($nisn, $ArrUpdate);
+        $this->M_Siswa->updateDataSiswa($nis, $ArrUpdate);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di edit!</div>');
         redirect(base_url('siswa'));
     }
 
 	public function fungsi_hapus($id)
     {
-        $profil['profil'] = $this->db->get_where('petugas', ['username' => $this->session->userdata('username')])->row_array();
+        $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
         $this->M_Siswa->hapusDataSiswa($id);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di hapus!</div>');

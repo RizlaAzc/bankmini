@@ -17,20 +17,20 @@ class M_Siswa extends CI_Model
 
     function getDataSiswaDetail($id)
     {
-        $this->db->where('nisn', $id);
+        $this->db->where('nis', $id);
         $query =  $this->db->get('siswa');
         return $query->row();
     }
 
     function updateDataSiswa($id, $data)
     {
-        $this->db->where('nisn', $id);
+        $this->db->where('nis', $id);
         $this->db->update('siswa', $data);
     }
 
     function hapusDataSiswa($id)
     {
-        $this->db->where('nisn', $id);
+        $this->db->where('nis', $id);
         $this->db->delete('siswa');
     }
 }
