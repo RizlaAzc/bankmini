@@ -10,18 +10,23 @@
                     <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Tambah Siswa
                   </button>
+                  <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                  Impor Data
+                  </button>
+                    <button type="button" class="badge badge-success text-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Ekspor Data
+                    </button>
+                    <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th style="width: 60px;">ID</th>
-                          <th>NISN</th>
+                          <th class="text-center" style="width: 60px;">No</th>
                           <th>NIS</th>
-                          <th>Nama</th>
-                          <th>Alamat</th>
-                          <th>No. Telepon</th>
-                          <th>ID SPP</th>
+                          <th>Nama Siswa</th>
+                          <th>Kelas</th>
+                          <th>Jenis Kelamin</th>
                           <th style="width: 140px;">Aksi</th>
                         </tr>
                       </thead>
@@ -31,14 +36,12 @@
                         foreach($siswa as $siswa){
                         ?>
                         <tr>
-                          <td><?= $no++ ?></td>
-                          <td><?= $siswa->nisn ?></td>
+                          <td class="text-center"><?= $no++ ?></td>
                           <td><?= $siswa->nis ?></td>
-                          <td><?= $siswa->nama ?></td>
-                          <td><?= $siswa->alamat ?></td>
-                          <td><?= $siswa->no_telp ?></td>
-                          <td><?= $siswa->id_spp ?></td>
-                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_siswa/' . $siswa->nisn) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Siswa/fungsi_hapus/' . $siswa->nisn) ?>">Hapus</a></label></td>
+                          <td><?= $siswa->nama_siswa ?></td>
+                          <td><?= $siswa->kelas ?></td>
+                          <td><?= $siswa->jenis_kelamin ?></td>
+                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_siswa/' . $siswa->nis) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Siswa/fungsi_hapus/' . $siswa->nis) ?>">Hapus</a></label></td>
                         </tr>
                         <?php
                         }
@@ -108,6 +111,35 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdropimpor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Impor Data Siswa</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="<?= base_url('import_siswa') ?>" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                  <div class="form-group">
+                      <label for="inputAddress" class="form-label">Upload File</label>
+                      <input type="file" class="form-control" id="inputAddress" name="file" accept=".xls, .xlsx" required>
+                      <div class="mt-1">
+                        <label for="inputAddress" class="form-label">File yang di upload harus berformat : .xls dan .xlsx</label>
+                                                <!-- <span class="text-secondary">File yang harus diupload : .xls, xlsx</span> -->
+                                            </div>
+                                            <?= form_error('file','<div class="text-danger">','</div>') ?>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" name="import" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -86,4 +86,6 @@ $route['petugas'] = 'data/C_petugas';
 $route['siswa'] = 'data/C_siswa';
 $route['spp'] = 'data/C_spp';
 
+$route['import_siswa'] = 'data/C_Siswa/excel';
+
 $route['histori_pembayaran'] = 'C_Histori';
