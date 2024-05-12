@@ -7,34 +7,63 @@
                 <div class="card-body">
                   <h4 class="card-title">Tabel Petugas</h4>
                   <p class="card-description">
-                    <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Tambah Petugas
-                  </button>
+                  </button> -->
+                  <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th style="width: 60px;">ID</th>
+                          <th class="text-center" style="width: 60px;">No</th>
                           <th>Nama Lengkap</th>
                           <th>Email</th>
                           <th>Posisi</th>
+                          <th>Status</th>
                           <th>Waktu Dibuat</th>
-                          <th style="width: 140px;">Aksi</th>
+                          <th class="text-center" style="width: 90px;">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $no = 1;
                         foreach($petugas as $petugas){
-                        ?>
+                          ?>
                         <tr>
-                          <td><?= $no++ ?></td>
+                          <td class="text-center"><?= $no++ ?></td>
                           <td><?= $petugas->nama_lengkap ?></td>
                           <td><?= $petugas->email ?></td>
-                          <td><?= $petugas->level ?></td>
+                          <td>
+                            <?php
+                            $posisi = $petugas->level;
+                            if($posisi == "Admin"){
+                            ?>
+                              <label class="badge badge-success"><a class="text-success" style="text-decoration: none;" href="<?= base_url('level_admin/' . $petugas->id_petugas) ?>"><?= $petugas->level ?></a></label>
+                            <?php
+                            }else{
+                            ?>
+                              <label class="badge badge-success"><a class="text-success" style="text-decoration: none;" href="<?= base_url('level_petugas/' . $petugas->id_petugas) ?>"><?= $petugas->level ?></a></label>
+                            <?php
+                            }
+                            ?>
+                          </td>
+                          <td>
+                            <?php
+                            $check = $petugas->status;
+                            if($check == "Sudah Aktif"){
+                            ?>
+                              <label class="badge badge-success"><a class="text-success" style="text-decoration: none;" href="<?= base_url('active_status/' . $petugas->id_petugas) ?>"><?= $petugas->status ?></a></label>
+                            <?php
+                            }else{
+                            ?>
+                              <label class="badge badge-danger"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('deactive_status/' . $petugas->id_petugas) ?>"><?= $petugas->status ?></a></label>
+                            <?php
+                            }
+                            ?>
+                          </td>
                           <td><?= $petugas->waktu_dibuat ?></td>
-                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_petugas/' . $petugas->id_petugas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Petugas/fungsi_hapus/' . $petugas->id_petugas) ?>">Hapus</a></label></td>
+                          <td class="text-center"><label class="badge badge-danger"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('fungsi_hapus_petugas/' . $petugas->id_petugas) ?>">Hapus</a></label></td>
                         </tr>
                         <?php
                         }

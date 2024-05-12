@@ -10,12 +10,24 @@
                     <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Tambah Kelas
                   </button>
+                  <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                  Impor Excel
+                  </button>
+                    <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">
+                    Ekspor Excel
+                    </button>
+                    <ul class="dropdown-menu" id="dropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('portofolio/excel') ?>">Excel</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('portofolio/pdf') ?>">Pdf</a></li>
+                        </ul> -->
+                    <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a>
+                    <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th class="text-center" style="width: 60px;">ID</th>
+                          <th class="text-center" style="width: 60px;">No</th>
                           <th>Kelas</th>
                           <th>Kompetensi Keahlian</th>
                           <th style="width: 140px;">Aksi</th>
@@ -30,7 +42,7 @@
                           <td class="text-center"><?= $no++ ?></td>
                           <td><?= $kelas->kelas ?></td>
                           <td><?= $kelas->kompetensi_keahlian ?></td>
-                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_kelas/' . $kelas->id_kelas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('admin/data/C_Kelas/fungsi_hapus/' . $kelas->id_kelas) ?>">Hapus</a></label></td>
+                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_kelas/' . $kelas->id_kelas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('fungsi_hapus_kelas/' . $kelas->id_kelas) ?>">Hapus</a></label></td>
                         </tr>
                         <?php
                         }
@@ -55,19 +67,29 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Tambah Kelas</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="<?= base_url('admin/data/C_Kelas/fungsi_tambah') ?>" method="post">
+              <form action="<?= base_url('tambah_kelas') ?>" method="post">
               <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputAddress" class="form-label">Nama Kelas</label>
-                        <input type="text" class="form-control" id="inputAddress" name="nama_kelas" placeholder="Nama Kelas" required>
+                    <div class="form-group text-center">
+                        <label for="inputAddress" class="form-label">Kelas</label>
+                        <div class="input-group justify-content-center mb-3">
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="X"> &nbsp; X
+                          </div>
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="XI"> &nbsp; XI
+                          </div>
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="XII"> &nbsp; XII
+                          </div>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-center">
                         <label for="inputAddress2" class="form-label">Kompetensi Keahlian</label>
                         <input type="text" class="form-control" id="exampleInputUsername1" name="kompetensi_keahlian" placeholder="Kompetensi Keahlian">
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>

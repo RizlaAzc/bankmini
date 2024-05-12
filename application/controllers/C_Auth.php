@@ -21,6 +21,7 @@ class C_Auth extends CI_Controller {
 		$username = $this->input->post('username', TRUE);
 		$password = $this->input->post('password', TRUE);
 
+		$active_check = $this->db->get_where('petugas', ['username' => $username])->row_array();
 		$level_check = $this->db->get_where('petugas', ['username' => $username])->row_array();
 		$admin = $this->db->get_where('petugas', ['username' => $username]);
 		$petugas = $this->db->get_where('petugas', ['username' => $username]);
@@ -29,59 +30,67 @@ class C_Auth extends CI_Controller {
 
 			$hasil_admin = $admin->row();
 
-			if ($level_check['level'] == 'Admin'){
+			if ($active_check['status'] == 'Sudah Aktif'){
 
-				if (password_verify($password, $hasil_admin->password)) {
+				if ($level_check['level'] == 'Admin'){
 
-					$this->session->set_userdata('id', $hasil_admin->id);
-					$this->session->set_userdata('nama_lengkap', TRUE);
-					$this->session->set_userdata('email', $hasil_admin->email);
-					$this->session->set_userdata('username', $hasil_admin->username);
-					$this->session->set_userdata('petugas_id', $hasil_admin->petugas_id);
-					$this->session->set_userdata('level', $hasil_admin->level);
-					redirect('dashboard');
-					
+					if (password_verify($password, $hasil_admin->password)) {
+
+						$this->session->set_userdata('id', $hasil_admin->id);
+						$this->session->set_userdata('nama_lengkap', TRUE);
+						$this->session->set_userdata('email', $hasil_admin->email);
+						$this->session->set_userdata('username', $hasil_admin->username);
+						$this->session->set_userdata('petugas_id', $hasil_admin->petugas_id);
+						$this->session->set_userdata('level', $hasil_admin->level);
+						redirect('dashboard');
+						
+					} else {
+
+						$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Password salah!</div>');
+						redirect('');
+					}
+
 				} else {
 
-					$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Password salah!</div>');
-					redirect('');
+					if ($petugas->num_rows() > 0) {
+
+						$hasil_petugas = $petugas->row();
+			
+						if ($level_check['level'] == 'Petugas'){
+			
+							if (password_verify($password, $hasil_petugas->password)) {
+			
+								$this->session->set_userdata('id', $hasil_petugas->id);
+								$this->session->set_userdata('nama_lengkap', TRUE);
+								$this->session->set_userdata('email', $hasil_petugas->email);
+								$this->session->set_userdata('username', $hasil_petugas->username);
+								$this->session->set_userdata('petugas_id', $hasil_petugas->petugas_id);
+								$this->session->set_userdata('level', $hasil_petugas->level);
+								redirect('dashboard');
+								
+							} else {
+			
+								$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Password salah!</div>');
+								redirect('');
+							}
+			
+						} else {
+
+								$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Akun tidak terdaftar!</div>');
+								redirect('');
+						}
+			
+					} else {
+			
+						$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Username tidak terdaftar!</div>');
+						redirect('');
+					}
 				}
 
 			} else {
 
-				if ($petugas->num_rows() > 0) {
-
-					$hasil_petugas = $petugas->row();
-		
-					if ($level_check['level'] == 'Petugas'){
-		
-						if (password_verify($password, $hasil_petugas->password)) {
-		
-							$this->session->set_userdata('id', $hasil_petugas->id);
-							$this->session->set_userdata('nama_lengkap', TRUE);
-							$this->session->set_userdata('email', $hasil_petugas->email);
-							$this->session->set_userdata('username', $hasil_petugas->username);
-							$this->session->set_userdata('petugas_id', $hasil_petugas->petugas_id);
-							$this->session->set_userdata('level', $hasil_petugas->level);
-							redirect('dashboard');
-							
-						} else {
-		
-							$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Password salah!</div>');
-							redirect('');
-						}
-		
-					} else {
-
-							$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Akun tidak terdaftar!</div>');
-							redirect('');
-					}
-		
-				} else {
-		
-					$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Username tidak terdaftar!</div>');
-					redirect('');
-				}
+				$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Akun anda belum mendapat persetujuan!</div>');
+				redirect('');
 			}
 
 		} else {
@@ -121,8 +130,8 @@ class C_Auth extends CI_Controller {
 				'nama_lengkap' => htmlspecialchars($this->input->post('nama_lengkap', true)),
 				'email' => htmlspecialchars($this->input->post('email', true)),
 				'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-				// 'level' => 'Petugas',
-				'level' => htmlspecialchars($this->input->post('level', true)),
+				'status' => 'Tidak Aktif',
+				'level' => 'Petugas',
 				// 'created_at' => date('Y-m-d H:i:s')
 			];
 

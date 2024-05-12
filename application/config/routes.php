@@ -81,15 +81,29 @@ $route['logout'] = 'C_Auth/logout';
 
 $route['dashboard'] = 'C_Dashboard';
 
-$route['kelas'] = 'data/C_kelas';
-$route['petugas'] = 'data/C_petugas';
-$route['siswa'] = 'data/C_siswa';
 $route['spp'] = 'data/C_spp';
 
+$route['kelas'] = 'data/C_kelas';
+$route['tambah_kelas'] = 'data/C_Kelas/fungsi_tambah';
+$route['edit_kelas/(:any)'] = 'data/C_Kelas/edit/$1';
+$route['fungsi_edit_kelas'] = 'data/C_Kelas/fungsi_edit';
+$route['fungsi_hapus_kelas/(:any)'] = 'data/C_Kelas/fungsi_hapus/$1';
+$route['export_kelas'] = 'data/C_Kelas/export';
+$route['import_kelas'] = 'data/C_Kelas/import';
+
+$route['petugas'] = 'data/C_petugas';
+$route['level_admin/(:any)'] = 'data/C_Petugas/admin_level_user/$1';
+$route['level_petugas/(:any)'] = 'data/C_Petugas/petugas_level_user/$1';
+$route['active_status/(:any)'] = 'data/C_Petugas/active_status_user/$1';
+$route['deactive_status/(:any)'] = 'data/C_Petugas/deactive_status_user/$1';
+$route['fungsi_hapus_petugas/(:any)'] = 'data/C_Petugas/fungsi_hapus/$1';
+
+$route['siswa'] = 'data/C_siswa';
 $route['tambah_siswa'] = 'data/C_Siswa/fungsi_tambah';
 $route['edit_siswa/(:any)'] = 'data/C_Siswa/edit/$1';
 $route['fungsi_edit_siswa'] = 'data/C_Siswa/fungsi_edit';
 $route['fungsi_hapus_siswa/(:any)'] = 'data/C_Siswa/fungsi_hapus/$1';
-$route['import_siswa'] = 'data/C_Siswa/excel';
+$route['export_siswa'] = 'data/C_Siswa/export';
+$route['import_siswa'] = 'data/C_Siswa/import';
 
 $route['histori_pembayaran'] = 'C_Histori';

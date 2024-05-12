@@ -2,7 +2,7 @@
       <div class="content-wrapper d-flex align-items-center auth px-0">
         <div class="row w-100 mx-0">
           <div class="col-lg-5" style="margin-left: 120px">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5 text-center">
+            <div class="auth-form-light py-5 px-4 px-sm-5 text-center">
               <div class="brand-logo">
                 <img src="<?= base_url('assets/images/smk.png') ?>" alt="logo">
               </div>
@@ -10,7 +10,7 @@
               <h6 class="fw-light">Buat sebuah Akun !</h6>
               
               <form action="<?= base_url('registrasi') ?>" method="post" class="pt-3">
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="" class="form-label">Sebagai :</label>
                   <div class="input-group justify-content-center mb-3">
                     <div class="input-group-text" style="margin-right: 5px;">
@@ -20,8 +20,8 @@
                       <input class="form-check-input mt-0" type="radio" name="level" value="Petugas"> &nbsp; Petugas
                     </div>
                   </div>
-                </div>
-                <div class="mt-3">
+                </div> -->
+                <div>
                   <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >Registrasi</button>
                 </div>
                 <br>
@@ -29,16 +29,16 @@
               </div>
             </div>
             <div class="col-lg-5" style="margin-right: 100px">
-              <div class="auth-form-light text-left py-5 px-4 px-sm-5 text-center">
-                    <div class="form-group">
-                      <input type="text" name="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" name="nama_lengkap" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Nama Lengkap" required>
-                    </div>
-                    <div class="form-group">
-                      <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" required>
-                    </div>
+              <div class="auth-form-light text-left pt-4 pb-1 px-4 px-sm-5">
+                <div class="form-group">
+                  <input type="text" name="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                  <input type="text" name="nama_lengkap" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Nama Lengkap" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" required>
+                </div>
                 <div class="form-group">
                   <input type="password" name="password1" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required>
                 </div>

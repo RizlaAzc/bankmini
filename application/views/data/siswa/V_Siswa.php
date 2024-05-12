@@ -13,9 +13,14 @@
                   <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                   Impor Excel
                   </button>
-                    <button type="button" class="badge badge-success text-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">
                     Ekspor Excel
                     </button>
+                    <ul class="dropdown-menu" id="dropdown">
+                            <li><a class="dropdown-item" href="<?= base_url('portofolio/excel') ?>">Excel</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('portofolio/pdf') ?>">Pdf</a></li>
+                        </ul> -->
+                    <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a>
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">

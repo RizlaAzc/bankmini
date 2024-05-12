@@ -8,11 +8,21 @@
                   <h4 class="card-title">Form Edit Kelas</h4>
                   <p class="card-description">
                   </p>
-                  <form action="<?= base_url('admin/data/C_Kelas/fungsi_edit') ?>" method="post" class="forms-sample">
+                  <form action="<?= base_url('fungsi_edit_kelas') ?>" method="post" class="forms-sample">
                     <div class="form-group">
-                      <label for="exampleInputUsername1">Nama Kelas</label>
+                      <label for="exampleInputUsername1">Kelas</label>
                       <input type="hidden" class="form-control" id="exampleInputUsername1" name="id_kelas" value="<?= $kelas->id_kelas ?>" placeholder="Id Kelas" readonly>
-                      <input type="text" class="form-control" id="exampleInputUsername1" name="nama_kelas" value="<?= $kelas->nama_kelas ?>" placeholder="Nama Kelas">
+                      <div class="input-group mb-3">
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="X"> &nbsp; X
+                          </div>
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="XI"> &nbsp; XI
+                          </div>
+                          <div class="input-group-text" style="margin-right: 5px;">
+                            <input class="form-check-input mt-0" type="radio" name="kelas" value="XII"> &nbsp; XII
+                          </div>
+                        </div>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Kompetensi Keahlian</label>

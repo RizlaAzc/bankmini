@@ -17,26 +17,11 @@ class C_Siswa extends CI_Controller {
 		
 	}
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/userguide3/general/urls.html
-	 */
 	public function index()
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-		$title['title'] = 'Data Siswa - Pembayaran SPP';
+		$title['title'] = 'Data Siswa - Bank Mini';
 
 		$year['year'] = date('Y');
 
@@ -57,7 +42,7 @@ class C_Siswa extends CI_Controller {
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-		$title['title'] = 'Edit Siswa - Pembayaran SPP';
+		$title['title'] = 'Edit Siswa - Bank Mini';
 
 		$year['year'] = date('Y');
 
@@ -126,61 +111,106 @@ class C_Siswa extends CI_Controller {
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-	public function excel()
-        {
-            if(isset($_FILES["file"]["name"])){
-                  // upload
-                $file_tmp = $_FILES['file']['tmp_name'];
-                $file_name = $_FILES['file']['name'];
-                $file_size =$_FILES['file']['size'];
-                $file_type=$_FILES['file']['type'];
-                // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
-                
-                $object = PHPExcel_IOFactory::load($file_tmp);
-        
-                foreach($object->getWorksheetIterator() as $worksheet){
-        
-                    $highestRow = $worksheet->getHighestRow();
-                    $highestColumn = $worksheet->getHighestColumn();
-        
-                    for($row=4; $row<=$highestRow;  $row++){
-        
-                        $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                        $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                        $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                        $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+	public function export()
+    {
+        $siswa = $this->M_Siswa->getDataSiswa();
+        $data['siswa'] = $siswa;
 
-                        $data[] = array(
-                            'nis'          => $nis,
-                            'nama_siswa'          =>$nama_siswa,
-                            'kelas'         =>$kelas,
-                            'jenis_kelamin'         =>$jenis_kelamin
-                        );
-						// var_dump($data);
-						// die;
-        
-                    } 
-        
-                }
+        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
+        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
 
-        
-                $this->db->insert_batch('siswa', $data);
-        
-                $message = array(
-                    'pesan'=>'<div class="alert alert-success">Import data siswa berhasil</div>',
-                );
-                
-                $this->session->set_flashdata($message);
-                redirect($_SERVER['HTTP_REFERER']);
-            }
-            else
-            {
-                 $message = array(
-                    'pesan'=>'<div class="alert alert-danger">Import data siswa gagal, coba lagi</div>',
-                );
-                
-                $this->session->set_flashdata($message);
-                redirect($_SERVER['HTTP_REFERER']);
-            }
+        $object = new PHPExcel();
+
+        $object->getProperties()->setCreator("Bank Mini");
+        $object->getProperties()->setLastModifiedBy("Bank Mini");
+        $object->getProperties()->setTitle("Data Siswa");
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'NIM');
+        $object->getActiveSheet()->setCellValue('B1', 'Nama Siswa');
+        $object->getActiveSheet()->setCellValue('C1', 'Jenis Kelamin');
+        $object->getActiveSheet()->setCellValue('D1', 'Kelas');
+
+        $baris = 2;
+        // $no = 1;
+
+        foreach($data['siswa'] as $siswa){
+            $object->getActivateSheet()->setCellValue('A'. $baris, $siswa->nis);
+            $object->getActivateSheet()->setCellValue('B'. $baris, $siswa->nama_siswa);
+            $object->getActivateSheet()->setCellValue('C'. $baris, $siswa->jenis_kelamin);
+            $object->getActivateSheet()->setCellValue('D'. $baris, $siswa->kelas);
+
+            $baris++;
         }
+
+        $filename = "Data_Siswa". '.xlsx';
+
+        $object->getActiveSheet()->setTitle("Data Siswa");
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
+        $writer->save('php://output');
+
+        exit;
+    }
+
+	public function import()
+    {
+        if(isset($_FILES["file"]["name"])){
+                // upload
+            $file_tmp = $_FILES['file']['tmp_name'];
+            $file_name = $_FILES['file']['name'];
+            $file_size =$_FILES['file']['size'];
+            $file_type=$_FILES['file']['type'];
+            // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
+            
+            $object = PHPExcel_IOFactory::load($file_tmp);
+    
+            foreach($object->getWorksheetIterator() as $worksheet){
+    
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+    
+                for($row=4; $row<=$highestRow;  $row++){
+    
+                    $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                    $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+
+                    $data[] = array(
+                        'nis'          => $nis,
+                        'nama_siswa'          =>$nama_siswa,
+                        'kelas'         =>$kelas,
+                        'jenis_kelamin'         =>$jenis_kelamin
+                    );
+    
+                } 
+    
+            }
+
+    
+            $this->db->insert_batch('siswa', $data);
+    
+            $message = array(
+                'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
+            );
+            
+            $this->session->set_flashdata($message);
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        else
+        {
+                $message = array(
+                'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
+            );
+            
+            $this->session->set_flashdata($message);
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
 }
