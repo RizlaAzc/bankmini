@@ -99,48 +99,48 @@ class C_Kelas extends CI_Controller {
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-	public function export()
-    {
-        $kelas = $this->M_Kelas->getDataKelas();
-        $data['kelas'] = $kelas;
+	// public function export()
+    // {
+    //     $kelas = $this->M_Kelas->getDataKelas();
+    //     $data['kelas'] = $kelas;
 
-        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
-        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+    //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
+    //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
 
-        $object = new PHPExcel();
+    //     $object = new PHPExcel();
 
-        $object->getProperties()->setCreator("Bank Mini");
-        $object->getProperties()->setLastModifiedBy("Bank Mini");
-        $object->getProperties()->setTitle("Data Kelas");
+    //     $object->getProperties()->setCreator("Bank Mini");
+    //     $object->getProperties()->setLastModifiedBy("Bank Mini");
+    //     $object->getProperties()->setTitle("Data Kelas");
 
-        $object->setActiveSheetIndex(0);
+    //     $object->setActiveSheetIndex(0);
 
-        $object->getActiveSheet()->setCellValue('A1', 'NIM');
-        $object->getActiveSheet()->setCellValue('B1', 'Nama Kelas');
+    //     $object->getActiveSheet()->setCellValue('A1', 'NIM');
+    //     $object->getActiveSheet()->setCellValue('B1', 'Nama Kelas');
 
-        $baris = 2;
-        // $no = 1;
+    //     $baris = 2;
+    //     // $no = 1;
 
-        foreach($data['kelas'] as $kelas){
-            $object->getActivateSheet()->setCellValue('A'. $baris, $kelas->nis);
-            $object->getActivateSheet()->setCellValue('B'. $baris, $kelas->nama_kelas);
+    //     foreach($data['kelas'] as $kelas){
+    //         $object->getActivateSheet()->setCellValue('A'. $baris, $kelas->nis);
+    //         $object->getActivateSheet()->setCellValue('B'. $baris, $kelas->nama_kelas);
 
-            $baris++;
-        }
+    //         $baris++;
+    //     }
 
-        $filename = "Data_Kelas". '.xlsx';
+    //     $filename = "Data_Kelas". '.xlsx';
 
-        $object->getActiveSheet()->setTitle("Data Kelas");
+    //     $object->getActiveSheet()->setTitle("Data Kelas");
 
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="'.$filename.'"');
-        header('Cache-Control: max-age=0');
+    //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //     header('Content-Disposition: attachment; filename="'.$filename.'"');
+    //     header('Cache-Control: max-age=0');
 
-        $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
-        $writer->save('php://output');
+    //     $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
+    //     $writer->save('php://output');
 
-        exit;
-    }
+    //     exit;
+    // }
 
 	public function import()
     {

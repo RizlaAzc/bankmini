@@ -25,7 +25,7 @@
                   <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >Registrasi</button>
                 </div>
                 <br>
-                <h6>Sudah memiliki Akun ?<a href="<?= base_url('') ?>"> Klik disini</a></h6>
+                <h6>Sudah memiliki Akun ?<a href="<?= base_url('') ?>"> Klik di sini</a></h6>
               </div>
             </div>
             <div class="col-lg-5" style="margin-right: 100px">

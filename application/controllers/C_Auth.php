@@ -6,8 +6,8 @@ class C_Auth extends CI_Controller {
 	public function index()
 	{
 		if ($this->session->userdata('email')) {
-			$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Logout terlebih dahulu! logout!</div>');
-			redirect('dashboard');
+			$this->session->set_flashdata('a', '<div class="alert alert-danger" role="alert">Harap Logout terlebih dahulu!</div>');
+			redirect('transaksi_debit');
 		}
 
 		$title['title'] = 'Bank Mini';
@@ -42,7 +42,7 @@ class C_Auth extends CI_Controller {
 						$this->session->set_userdata('username', $hasil_admin->username);
 						$this->session->set_userdata('petugas_id', $hasil_admin->petugas_id);
 						$this->session->set_userdata('level', $hasil_admin->level);
-						redirect('dashboard');
+						redirect('transaksi_debit');
 						
 					} else {
 
@@ -66,7 +66,7 @@ class C_Auth extends CI_Controller {
 								$this->session->set_userdata('username', $hasil_petugas->username);
 								$this->session->set_userdata('petugas_id', $hasil_petugas->petugas_id);
 								$this->session->set_userdata('level', $hasil_petugas->level);
-								redirect('dashboard');
+								redirect('transaksi_debit');
 								
 							} else {
 			

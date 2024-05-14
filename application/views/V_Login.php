@@ -23,7 +23,7 @@
                 </div>
               </form>
               <br>
-              <h6>Belum punya Akun ?<a href="<?= base_url('registrasi') ?>"> Klik disini</a></h6>
+              <h6>Belum punya Akun ?<a href="<?= base_url('registrasi') ?>"> Klik di sini</a></h6>
             </div>
           </div>
         </div>

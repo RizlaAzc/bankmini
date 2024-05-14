@@ -53,36 +53,25 @@ $route['default_controller'] = 'C_Auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['admin'] = 'admin/C_Login';
-
-$route['admin/dashboard'] = 'admin/C_Dashboard';
-
-// $route['kelas'] = 'admin/data/C_Kelas';
-$route['edit_kelas/(:any)'] = 'admin/data/C_Kelas/edit/$1';
-
-// $route['spp'] = 'admin/data/C_SPP';
-$route['edit_spp/(:any)'] = 'admin/data/C_SPP/edit/$1';
-
-// $route['petugas'] = 'admin/data/C_Petugas';
-$route['edit_petugas/(:any)'] = 'admin/data/C_Petugas/edit/$1';
-
-// $route['siswa'] = 'admin/data/C_Siswa';
-$route['edit_siswa/(:any)'] = 'admin/data/C_Siswa/edit/$1';
-
-$route['transaksi'] = 'admin/payment/C_Transaksi';
-$route['histori'] = 'admin/payment/C_Histori';
-
-
+// Route Auth
 $route[''] = 'C_Auth';
-
 $route['login'] = 'C_Auth/login';
 $route['registrasi'] = 'C_Auth/registrasi';
 $route['logout'] = 'C_Auth/logout';
 
-$route['dashboard'] = 'C_Dashboard';
+// Route Transaksi
+$route['transaksi_debit'] = 'transaksi/C_Debit';
 
-$route['spp'] = 'data/C_spp';
+$route['transaksi_kredit'] = 'transaksi/C_Kredit';
 
+$route['riwayat_transaksi'] = 'transaksi/C_Riwayat';
+
+// Route Tabungan
+$route['tabungan_harian'] = 'tabungan/C_Harian';
+
+$route['tabungan_tahunan'] = 'tabungan/C_Tahunan';
+
+// Route Data
 $route['kelas'] = 'data/C_kelas';
 $route['tambah_kelas'] = 'data/C_Kelas/fungsi_tambah';
 $route['edit_kelas/(:any)'] = 'data/C_Kelas/edit/$1';
@@ -105,5 +94,3 @@ $route['fungsi_edit_siswa'] = 'data/C_Siswa/fungsi_edit';
 $route['fungsi_hapus_siswa/(:any)'] = 'data/C_Siswa/fungsi_hapus/$1';
 $route['export_siswa'] = 'data/C_Siswa/export';
 $route['import_siswa'] = 'data/C_Siswa/import';
-
-$route['histori_pembayaran'] = 'C_Histori';

@@ -20,7 +20,7 @@
                             <li><a class="dropdown-item" href="<?= base_url('portofolio/excel') ?>">Excel</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('portofolio/pdf') ?>">Pdf</a></li>
                         </ul> -->
-                    <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a>
+                    <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">

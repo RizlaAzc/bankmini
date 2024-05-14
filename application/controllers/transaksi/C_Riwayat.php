@@ -1,13 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_Siswa extends CI_Controller {
+class C_Riwayat extends CI_Controller {
 
 	public function __construct() {
 
 		parent::__construct();
 		
-		$this->load->model('M_Siswa');
 		$this->load->model('M_Kelas');
 
 		if (!$this->session->userdata('email')) {
@@ -16,25 +15,22 @@ class C_Siswa extends CI_Controller {
         }
 		
 	}
-
 	public function index()
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-		$title['title'] = 'Data Siswa - Bank Mini';
+		$title['title'] = 'Data Kelas - Bank Mini';
 
 		$year['year'] = date('Y');
 
-		$siswa = $this->M_Siswa->getDataSiswa();
 		$kelas = $this->M_Kelas->getDataKelas();
 
-		$data['siswa'] = $siswa;
 		$data['kelas'] = $kelas;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
 		$this->load->view('_partials/_sidebar');
-		$this->load->view('data/siswa/V_Siswa', $data);
+		$this->load->view('transaksi/riwayat/V_Riwayat', $data);
 		$this->load->view('_partials/_footer', $year);
 	}
 
@@ -42,20 +38,18 @@ class C_Siswa extends CI_Controller {
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-		$title['title'] = 'Edit Siswa - Bank Mini';
+		$title['title'] = 'Edit Kelas - Bank Mini';
 
 		$year['year'] = date('Y');
 
-		$kelas = $this->M_Kelas->getDataKelas();
-		$siswa = $this->M_Siswa->getDataSiswaDetail($id);
+		$kelas = $this->M_Kelas->getDataKelasDetail($id);
 
-		$data['siswa'] = $siswa;
 		$data['kelas'] = $kelas;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
 		$this->load->view('_partials/_sidebar');
-		$this->load->view('data/siswa/V_Edit', $data);
+		$this->load->view('data/kelas/V_Edit', $data);
 		$this->load->view('_partials/_footer', $year);
 	}
 
@@ -63,19 +57,15 @@ class C_Siswa extends CI_Controller {
     {
         $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $nis = $this->input->post('nis');
-        $nama_siswa = $this->input->post('nama_siswa');
-        $jenis_kelamin = $this->input->post('jenis_kelamin');
         $kelas = $this->input->post('kelas');
+        $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
 
         $ArrInsert = array(
-            'nis' => $nis,
-            'nama_siswa' => $nama_siswa,
-            'jenis_kelamin' => $jenis_kelamin,
-            'kelas' => $kelas
+            'kelas' => $kelas,
+            'kompetensi_keahlian' => $kompetensi_keahlian
         );
 
-        $this->M_Siswa->insertDataSiswa($ArrInsert);
+        $this->M_Kelas->insertDataKelas($ArrInsert);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
 		redirect($_SERVER['HTTP_REFERER']);
     }
@@ -84,37 +74,35 @@ class C_Siswa extends CI_Controller {
     {
         $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $nis = $this->input->post('nis');
-        $nama_siswa = $this->input->post('nama_siswa');
-        $jenis_kelamin = $this->input->post('jenis_kelamin');
+        $id = $this->input->post('id_kelas');
         $kelas = $this->input->post('kelas');
+        $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
 
         $ArrUpdate = array(
-            'nis' => $nis,
-            'nama_siswa' => $nama_siswa,
-            'jenis_kelamin' => $jenis_kelamin,
-            'kelas' => $kelas
+            'id_kelas' => $id,
+            'kelas' => $kelas,
+            'kompetensi_keahlian' => $kompetensi_keahlian
         );
 
-        $this->M_Siswa->updateDataSiswa($nis, $ArrUpdate);
+        $this->M_Kelas->updateDataKelas($id, $ArrUpdate);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di edit!</div>');
-        redirect(base_url('siswa'));
+        redirect(base_url('kelas'));
     }
 
 	public function fungsi_hapus($id)
     {
         $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $this->M_Siswa->hapusDataSiswa($id);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di hapus!</div>');
+        $this->M_Kelas->hapusDataKelas($id);
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
 
         redirect($_SERVER['HTTP_REFERER']);
     }
 
 	// public function export()
     // {
-    //     $siswa = $this->M_Siswa->getDataSiswa();
-    //     $data['siswa'] = $siswa;
+    //     $kelas = $this->M_Kelas->getDataKelas();
+    //     $data['kelas'] = $kelas;
 
     //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
     //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
@@ -123,30 +111,26 @@ class C_Siswa extends CI_Controller {
 
     //     $object->getProperties()->setCreator("Bank Mini");
     //     $object->getProperties()->setLastModifiedBy("Bank Mini");
-    //     $object->getProperties()->setTitle("Data Siswa");
+    //     $object->getProperties()->setTitle("Data Kelas");
 
     //     $object->setActiveSheetIndex(0);
 
     //     $object->getActiveSheet()->setCellValue('A1', 'NIM');
-    //     $object->getActiveSheet()->setCellValue('B1', 'Nama Siswa');
-    //     $object->getActiveSheet()->setCellValue('C1', 'Jenis Kelamin');
-    //     $object->getActiveSheet()->setCellValue('D1', 'Kelas');
+    //     $object->getActiveSheet()->setCellValue('B1', 'Nama Kelas');
 
     //     $baris = 2;
     //     // $no = 1;
 
-    //     foreach($data['siswa'] as $siswa){
-    //         $object->getActivateSheet()->setCellValue('A'. $baris, $siswa->nis);
-    //         $object->getActivateSheet()->setCellValue('B'. $baris, $siswa->nama_siswa);
-    //         $object->getActivateSheet()->setCellValue('C'. $baris, $siswa->jenis_kelamin);
-    //         $object->getActivateSheet()->setCellValue('D'. $baris, $siswa->kelas);
+    //     foreach($data['kelas'] as $kelas){
+    //         $object->getActivateSheet()->setCellValue('A'. $baris, $kelas->nis);
+    //         $object->getActivateSheet()->setCellValue('B'. $baris, $kelas->nama_kelas);
 
     //         $baris++;
     //     }
 
-    //     $filename = "Data_Siswa". '.xlsx';
+    //     $filename = "Data_Kelas". '.xlsx';
 
-    //     $object->getActiveSheet()->setTitle("Data Siswa");
+    //     $object->getActiveSheet()->setTitle("Data Kelas");
 
     //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     //     header('Content-Disposition: attachment; filename="'.$filename.'"');
