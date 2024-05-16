@@ -88,11 +88,12 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Setoran Tunai</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="<?= base_url('tambah_kelas') ?>" method="post">
+              <script src="<?php echo base_url(); ?>assets/ajax.js"></script>
+              <form action="<?= base_url('tambah_kelas') ?>" method="post" autocomplete="off">
               <div class="modal-body">
                     <div class="form-group">
                         <label for="inputAddress2" class="form-label">NIS</label>
-                        <input class="form-control" list="data_siswa" type="text" name="nis" id="nis" placeholder="Cari NIS">
+                        <input class="form-control" list="data_siswa" type="text" name="nis" id="nis" placeholder="Cari NIS" onchange="return autofill();">
                     </div>
                     <div class="form-group">
                         <label for="inputAddress2" class="form-label">Nama Siswa</label>
@@ -111,3 +112,29 @@
             </div>
           </div>
         </div>
+
+        <datalist id="data_siswa">
+          <?php
+          foreach ($siswa as $b)
+          {
+              echo "<option class='form-control' value='$b->nis'>$b->nama_siswa</option>";
+          }
+          ?> 
+        </datalist>   
+        <script>
+          function autofill(){
+            var nis =document.getElementById('nis').value;
+            $.ajax({
+              url:"<?php echo base_url();?>transaksi/C_Riwayat/cari",
+              data:'&nis='+nis,
+              success:function(data){
+                var hasil = JSON.parse(data);  
+                $.each(hasil, function(key,val){ 
+                  document.getElementById('nis').value=val.nis;
+                  document.getElementById('nama_siswa').value=val.nama_siswa;
+                  document.getElementById('kelas').value=val.kelas;        
+                });
+              }
+            });
+          }
+        </script>

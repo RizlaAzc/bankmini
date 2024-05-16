@@ -34,4 +34,9 @@ class M_Transaksi extends CI_Model
         $this->db->where('id_transaksi', $id);
         $this->db->delete('riwayat_transaksi');
     }
+
+    function cari($id){
+        $query= $this->db->get_where('siswa',array('nis'=>$id));
+        return $query;
+    }
 }

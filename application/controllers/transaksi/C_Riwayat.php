@@ -8,7 +8,7 @@ class C_Riwayat extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('M_Transaksi');
-		$this->load->model('M_Kelas');
+		$this->load->model('M_Siswa');
 
 		if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');
@@ -25,10 +25,10 @@ class C_Riwayat extends CI_Controller {
 		$year['year'] = date('Y');
 
 		$transaksi = $this->M_Transaksi->getDataTransaksi();
-		$kelas = $this->M_Kelas->getDataKelas();
+		$siswa = $this->M_Siswa->getDataSiswa();
 
 		$data['transaksi'] = $transaksi;
-		$data['kelas'] = $kelas;
+		$data['siswa'] = $siswa;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
@@ -36,4 +36,10 @@ class C_Riwayat extends CI_Controller {
 		$this->load->view('transaksi/riwayat/V_Riwayat', $data);
 		$this->load->view('_partials/_footer', $year);
 	}
+
+	public function cari(){
+        $nis=$_GET['nis'];
+        $cari =$this->M_Transaksi->cari($nis)->result();
+        echo json_encode($cari);
+    } 
 }
