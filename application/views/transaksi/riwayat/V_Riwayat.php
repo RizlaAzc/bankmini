@@ -5,14 +5,14 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Kelas</h4>
+                  <h4 class="card-title">Tabel Riwayat Transaksi</h4>
                   <p class="card-description">
-                    <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Tambah Kelas
+                    <button type="button" class="badge badge-success text-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Setoran Tunai
                   </button>
-                  <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                  <!-- <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                   Impor Excel
-                  </button>
+                  </button> -->
                     <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">
                     Ekspor Excel
                     </button>
@@ -24,25 +24,46 @@
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table">
                       <thead>
                         <tr>
-                          <th class="text-center" style="width: 60px;">No</th>
-                          <th>Kelas</th>
-                          <th>Kompetensi Keahlian</th>
-                          <th style="width: 140px;">Aksi</th>
+                          <!-- <th class="text-center" style="width: 60px;">No</th> -->
+                          <th>Tanggal</th>
+                          <th>No. Transaksi</th>
+                          <th>Nama Siswa</th>
+                          <th>Jenis Tabungan</th>
+                          <th>Debit</th>
+                          <th>Kredit</th>
+                          <th>Saldo</th>
+                          <!-- <th style="width: 140px;">Aksi</th> -->
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $no = 1;
-                        foreach($kelas as $kelas){
+                        foreach($transaksi as $transaksi){
                         ?>
-                        <tr>
-                          <td class="text-center"><?= $no++ ?></td>
-                          <td><?= $kelas->kelas ?></td>
-                          <td><?= $kelas->kompetensi_keahlian ?></td>
-                          <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_kelas/' . $kelas->id_kelas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('fungsi_hapus_kelas/' . $kelas->id_kelas) ?>">Hapus</a></label></td>
+                        <?php
+                        $check_debit = $transaksi->debit;
+                        $check_kredit = $transaksi->kredit;
+                        if($check_debit != 0){
+                        ?>
+                        <tr class="bg-success text-light">
+                        <?php
+                        }else if($check_kredit != 0){
+                        ?>
+                          <tr class="bg-danger text-light">
+                        <?php
+                        }
+                        ?>
+                          <td><?= $transaksi->tanggal ?></td>
+                          <td><?= $transaksi->id_transaksi ?></td>
+                          <td><?= $transaksi->nama_siswa ?></td>
+                          <td><?= $transaksi->jenis_tabungan ?></td>
+                          <td><?= $transaksi->debit ?></td>
+                          <td><?= $transaksi->kredit ?></td>
+                          <td><?= $transaksi->saldo ?></td>
+                          <!-- <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_kelas/' . $transaksi->id_kelas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('fungsi_hapus_kelas/' . $transaksi->id_kelas) ?>">Hapus</a></label></td> -->
                         </tr>
                         <?php
                         }
@@ -64,28 +85,22 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Tambah Kelas</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Setoran Tunai</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="<?= base_url('tambah_kelas') ?>" method="post">
               <div class="modal-body">
-                    <div class="form-group text-center">
-                        <label for="inputAddress" class="form-label">Kelas</label>
-                        <div class="input-group justify-content-center mb-3">
-                          <div class="input-group-text" style="margin-right: 5px;">
-                            <input class="form-check-input mt-0" type="radio" name="kelas" value="X"> &nbsp; X
-                          </div>
-                          <div class="input-group-text" style="margin-right: 5px;">
-                            <input class="form-check-input mt-0" type="radio" name="kelas" value="XI"> &nbsp; XI
-                          </div>
-                          <div class="input-group-text" style="margin-right: 5px;">
-                            <input class="form-check-input mt-0" type="radio" name="kelas" value="XII"> &nbsp; XII
-                          </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="inputAddress2" class="form-label">NIS</label>
+                        <input class="form-control" list="data_siswa" type="text" name="nis" id="nis" placeholder="Cari NIS">
                     </div>
-                    <div class="form-group text-center">
-                        <label for="inputAddress2" class="form-label">Kompetensi Keahlian</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="kompetensi_keahlian" placeholder="Kompetensi Keahlian">
+                    <div class="form-group">
+                        <label for="inputAddress2" class="form-label">Nama Siswa</label>
+                        <input class="form-control" type="text" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2" class="form-label">Kelas</label>
+                        <input class="form-control" type="text" name="kelas" id="kelas" placeholder="Kelas" readonly>
                     </div>
                   </div>
                   <div class="modal-footer">
