@@ -60,11 +60,8 @@ $route['registrasi'] = 'C_Auth/registrasi';
 $route['logout'] = 'C_Auth/logout';
 
 // Route Transaksi
-$route['transaksi_debit'] = 'transaksi/C_Debit';
-
-$route['transaksi_kredit'] = 'transaksi/C_Kredit';
-
-$route['riwayat_transaksi'] = 'transaksi/C_Riwayat';
+$route['transaksi'] = 'C_Transaksi';
+$route['lakukan_transaksi'] = 'C_Transaksi/transaksi';
 
 // Route Tabungan
 $route['tabungan_harian'] = 'tabungan/C_Harian';

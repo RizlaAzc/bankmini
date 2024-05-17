@@ -1,22 +1,10 @@
 <!-- partial:partials/_sidebar.html -->
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <ul class="nav">
+  <ul class="nav">  
     <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('transaksi_debit') ?>">
-        <i class="mdi mdi-book-arrow-down menu-icon"></i>
-        <span class="menu-title">Transaksi Debit</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('transaksi_kredit') ?>">
-        <i class="mdi mdi-book-arrow-up menu-icon"></i>
-        <span class="menu-title">Transaksi Kredit</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('riwayat_transaksi') ?>">
+      <a class="nav-link" href="<?= base_url('transaksi') ?>">
         <i class="mdi mdi-book-open menu-icon"></i>
-        <span class="menu-title">Riwayat Transaksi</span>
+        <span class="menu-title">Transaksi</span>
       </a>
     </li>
     <li class="nav-item nav-category">Buku Tabungan</li>
@@ -35,7 +23,7 @@
     <?php
       if ($this->session->userdata('level') == 'Admin') {
     ?>
-    <li class="nav-item nav-category">Data</li>
+    <li class="nav-item nav-category">Lainnya</li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="menu-icon mdi mdi-database"></i>

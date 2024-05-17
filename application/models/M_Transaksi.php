@@ -7,6 +7,7 @@ class M_Transaksi extends CI_Model
     function getDataTransaksi()
     {
         $this->db->join('siswa', 'siswa.nis = riwayat_transaksi.nis');
+        $this->db->order_by("id_transaksi", "asc");
         $query = $this->db->get('riwayat_transaksi');
         return $query->result();
     }
@@ -36,7 +37,7 @@ class M_Transaksi extends CI_Model
     }
 
     function cari($id){
-        $query= $this->db->get_where('siswa',array('nis'=>$id));
+        $query= $this->db->get_where('siswa',array('nama_siswa'=>$id));
         return $query;
     }
 }

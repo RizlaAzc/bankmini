@@ -5,10 +5,10 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Riwayat Transaksi</h4>
+                  <h4 class="card-title">Tabel Transaksi</h4>
                   <p class="card-description">
-                    <button type="button" class="badge badge-success text-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Setoran Tunai
+                    <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Lakukan Transaksi
                   </button>
                   <!-- <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                   Impor Excel
@@ -82,33 +82,70 @@
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog" style="max-width: 700px;">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Setoran Tunai</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Transaksi</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <script src="<?php echo base_url(); ?>assets/ajax.js"></script>
-              <form action="<?= base_url('tambah_kelas') ?>" method="post" autocomplete="off">
+              <form action="<?= base_url('lakukan_transaksi') ?>" method="post" autocomplete="off">
               <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">NIS</label>
-                        <input class="form-control" list="data_siswa" type="text" name="nis" id="nis" placeholder="Cari NIS" onchange="return autofill();">
-                    </div>
+                <div class="row">
+                  <div class="col-lg-5">
                     <div class="form-group">
                         <label for="inputAddress2" class="form-label">Nama Siswa</label>
-                        <input class="form-control" type="text" name="nama_siswa" id="nama_siswa" placeholder="Nama Siswa" readonly>
+                        <input class="form-control" list="data_siswa" type="text" name="nama_siswa" id="nama_siswa" placeholder="Cari Nama" onchange="return autofill();">
                     </div>
                     <div class="form-group">
                         <label for="inputAddress2" class="form-label">Kelas</label>
                         <input class="form-control" type="text" name="kelas" id="kelas" placeholder="Kelas" readonly>
                     </div>
+                    <div class="form-group">
+                        <label for="inputAddress2" class="form-label">NIS</label>
+                        <input class="form-control" type="text" name="nis" id="nis" placeholder="NIS" readonly>
+                    </div>
                   </div>
-                  <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                  <div class="col-lg-7">
+                    <div class="form-group">
+                      <label for="inputAddress2" class="form-label">Nominal (IDR)</label>
+                      <input class="form-control" type="text" name="nominal" id="nominal" placeholder="Nominal (IDR)">
+                      <input class="form-control" type="hidden" name="check_saldo" id="debit" value="<?= $transaksi->saldo ?>" placeholder="Nominal (IDR)">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputAddress2" class="form-label">Keterangan</label>
+                      <input class="form-control" type="text" name="keterangan" id="keterangan" placeholder="Keterangan">
+                    </div>
+                    <div class="form-group text-center">
+                      <label for="inputAddress2" class="form-label">Jenis Tabungan</label>
+                      <div class="input-group justify-content-center mb-3">
+                        <div class="input-group-text" style="margin-right: 5px;">
+                          <input class="form-check-input mt-0" type="radio" name="jenis_tabungan" value="Tabungan Harian"> &nbsp; Tabungan Harian
+                        </div>
+                        <div class="input-group-text" style="margin-left: 5px;">
+                          <input class="form-check-input mt-0" type="radio" name="jenis_tabungan" value="Tabungan Tahunan"> &nbsp; Tabungan Tahunan
+                        </div>
+                      </div>
+                      <input class="form-control" type="hidden" name="id_petugas" id="id_petugas" value="<?= $profil['id_petugas'] ?>" placeholder="Nama Petugas" readonly>
+                    </div>
                   </div>
-                </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="form-group">
+                <label for="inputAddress2" class="form-label">Pilih Transaksi :</label>
+                <select class="form-control" style="width: 200px; margin-right: 231px;" name="jenis_transaksi" id="jenis_transaksi">
+                  <option class="form-control" selected="true" disabled="disabled">Belum dipilih</option>
+                  <option class="form-control" value="debit">Debit</option>
+                  <option class="form-control" value="kredit">Kredit</option>
+                </select>
+                </div>
+                <div class="form-group" style="margin-top: 30px;">
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -117,22 +154,22 @@
           <?php
           foreach ($siswa as $b)
           {
-              echo "<option class='form-control' value='$b->nis'>$b->nama_siswa</option>";
+              echo "<option class='form-control' value='$b->nama_siswa'>$b->nis</option>";
           }
           ?> 
         </datalist>   
         <script>
           function autofill(){
-            var nis =document.getElementById('nis').value;
+            var nama_siswa =document.getElementById('nama_siswa').value;
             $.ajax({
-              url:"<?php echo base_url();?>transaksi/C_Riwayat/cari",
-              data:'&nis='+nis,
+              url:"<?php echo base_url();?>C_Transaksi/cari",
+              data:'&nama_siswa='+nama_siswa,
               success:function(data){
                 var hasil = JSON.parse(data);  
                 $.each(hasil, function(key,val){ 
-                  document.getElementById('nis').value=val.nis;
                   document.getElementById('nama_siswa').value=val.nama_siswa;
                   document.getElementById('kelas').value=val.kelas;        
+                  document.getElementById('nis').value=val.nis;
                 });
               }
             });
