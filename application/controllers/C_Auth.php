@@ -6,7 +6,6 @@ class C_Auth extends CI_Controller {
 	public function __construct() {
 
 		parent::__construct();
-		
         date_default_timezone_set('Asia/Jakarta');
 		
 	}
@@ -111,17 +110,21 @@ class C_Auth extends CI_Controller {
 	public function registrasi()
 	{
 		$this->form_validation->set_rules('nama_lengkap', 'nama_lengkap', 'required|trim');
+		$this->form_validation->set_rules('username', 'username', 'required|trim|is_unique[petugas.username]',
+		[
+			'is_unique' => 'Username ini sudah terdaftar.'
+		]);
 		$this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[petugas.email]', [
-			'is_unique' => 'Email ini telah terdaftar !'
+			'is_unique' => 'Email ini sudah terdaftar.'
 		]);
 
 		$this->form_validation->set_rules(
 			'password1',
 			'password',
-			'required|trim|min_length[3]|matches[password2]',
+			'required|trim|min_length[8]|matches[password2]',
 			[
-				'matches' => 'password dont match!',
-				'min_length' => 'password to short!'
+				'matches' => 'Password tidak sesuai.',
+				'min_length' => 'Password terlalu pendek.'
 			]
 		);
 
@@ -134,8 +137,8 @@ class C_Auth extends CI_Controller {
 		} else {
 
 			$data = [
-				'username' => htmlspecialchars($this->input->post('username', true)),
 				'nama_lengkap' => htmlspecialchars($this->input->post('nama_lengkap', true)),
+				'username' => htmlspecialchars($this->input->post('username', true)),
 				'email' => htmlspecialchars($this->input->post('email', true)),
 				'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
 				'status' => 'Tidak Aktif',

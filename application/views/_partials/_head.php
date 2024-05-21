@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="<?= base_url('assets/css/vertical-layout-light/style.css') ?>">
   <!-- endinject -->
   <link rel="shortcut icon" href="<?= base_url('assets/images/smk.png') ?>" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
 </head>
 <body>
   <div class="container-scroller">
