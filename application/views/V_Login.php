@@ -7,13 +7,13 @@
                 <img src="<?= base_url('assets/images/smk.png') ?>" alt="logo">
               </div>
               <h4>Bank Mini</h4>
-              <h6 class="fw-light pb-1">Login untuk melanjutkan.</h6>
+              <h6 class="fw-light pb-4">Login untuk melanjutkan.</h6>
               <?= $this->session->flashdata('a'); ?>
               <form action="<?= base_url('login') ?>" method="post" class="pt-1">
                 <div class="form-group">
                   <input type="text" name="username" class="form-control form-control-lg" id="exampleInputEmail1" onfocus="this.value=''" placeholder="Username">
                 </div>
-                <div class="form-group mb-1">
+                <div class="form-group mb-4">
                   <input type="password" name="password" class="form-control form-control-lg" id="password" onfocus="this.value=''" placeholder="Password">
                   <i class="fa fa-eye-slash mt-2" id="togglePassword"></i>
                 </div>
