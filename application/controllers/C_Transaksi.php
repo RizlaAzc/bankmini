@@ -9,6 +9,7 @@ class C_Transaksi extends CI_Controller {
 		
 		$this->load->model('M_Transaksi');
 		$this->load->model('M_Siswa');
+        date_default_timezone_set('Asia/Jakarta');
 
 		if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');
@@ -16,6 +17,7 @@ class C_Transaksi extends CI_Controller {
         }
 		
 	}
+    
 	public function index()
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
