@@ -6,7 +6,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Mutasi <?= $siswa->nama_siswa ?></h4>
-                  <p class="card-description">
+                  <p class="card-description">Saldo saat ini : <?= $saldo_saat_ini['saldo_tahunan'] ?>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Lakukan Transaksi
                   </button> -->

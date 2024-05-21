@@ -6,7 +6,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Tabel Tabungan Tahunan</h4>
-                  <p class="card-description">
+                  <p class="card-description">Total saldo tabungan tahunan berjumlah : <?= $saldo_saat_ini['saldo_tahunan'] ?>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Lakukan Transaksi
                   </button> -->
@@ -31,7 +31,6 @@
                           <th>NIS</th>
                           <th>Nama Siswa</th>
                           <th>Kelas</th>
-                          <th>Saldo</th>
                           <th style="width: 130px;">Aksi</th>
                         </tr>
                       </thead>
@@ -45,7 +44,6 @@
                           <td><?= $transaksi->nis ?></td>
                           <td><?= $transaksi->nama_siswa ?></td>
                           <td><?= $transaksi->kelas ?></td>
-                          <td><?= $transaksi->saldo_tahunan ?></td>
                           <td><label class="badge badge-primary" style="margin-right: 3px;"><a class="text-primary" style="text-decoration: none;" href="<?= base_url('mutasi_tahunan/' . $transaksi->nis) ?>">Lihat Mutasi</a></label></td>
                         </tr>
                         <?php

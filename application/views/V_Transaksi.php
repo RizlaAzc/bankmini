@@ -7,9 +7,14 @@
                 <div class="card-body">
                   <h4 class="card-title">Tabel Transaksi</h4>
                   <p class="card-description">
-                    <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Lakukan Transaksi
-                  </button>
+                    Total saldo keseluruhan berjumlah : <?= $saldo_saat_ini['saldo'] ?>
+                    <div class="row mb-3">
+                      <div class="col-lg-2">
+                        <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          Lakukan Transaksi
+                        </button>
+                      </div>
+                    </div>
                   <!-- <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                   Impor Excel
                   </button> -->
@@ -40,7 +45,6 @@
                       </thead>
                       <tbody>
                         <?php
-                        $no = 1;
                         foreach($transaksi as $transaksi){
                         ?>
                         <?php

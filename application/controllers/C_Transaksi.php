@@ -29,9 +29,11 @@ class C_Transaksi extends CI_Controller {
 		$transaksi = $this->M_Transaksi->getDataTransaksi();
 		$siswa = $this->M_Siswa->getDataSiswa();
         $check_saldo = $this->db->query("SELECT saldo FROM riwayat_transaksi")->result();
+        $saldo_saat_ini = $this->db->query("SELECT saldo FROM riwayat_transaksi ORDER BY id_transaksi DESC LIMIT 1")->row_array();
 
 		$data['transaksi'] = $transaksi;
 		$data['siswa'] = $siswa;
+		$data['saldo_saat_ini'] = $saldo_saat_ini;
 		$data['check_saldo'] = $check_saldo;
 
 		$this->load->view('_partials/_head', $title);

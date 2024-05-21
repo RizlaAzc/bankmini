@@ -6,7 +6,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Mutasi <?= $siswa->nama_siswa ?></h4>
-                  <p class="card-description">
+                  <p class="card-description">Saldo saat ini : <?= $saldo_saat_ini['saldo_harian'] ?>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Lakukan Transaksi
                   </button> -->
@@ -40,18 +40,18 @@
                         <?php
                         $no = 1;
                         foreach($transaksi as $transaksi){
-                        ?>
+                          ?>
                         <?php
                         $check_debit = $transaksi->debit;
                         $check_kredit = $transaksi->kredit;
                         if($check_debit != 0){
                         ?>
                         <tr class="bg-success text-light">
-                        <?php
+                          <?php
                         }else if($check_kredit != 0){
-                        ?>
+                          ?>
                           <tr class="bg-danger text-light">
-                        <?php
+                            <?php
                         }
                         ?>
                             <td><?= $transaksi->tanggal ?></td>
@@ -61,11 +61,22 @@
                             <td><?= $transaksi->kredit ?></td>
                             <td><?= $transaksi->saldo_harian ?></td>
                             <td><?= $transaksi->nama_lengkap ?></td>
-                        </tr>
-                        <?php
+                          </tr>
+                          <?php
                         }
                         ?>
                       </tbody>
+                      <!-- <thead>
+                        <tr>
+                          <th>Tanggal</th>
+                          <th>No. Transaksi</th>
+                          <th>Keterangan</th>
+                          <th>Debit</th>
+                          <th>Kredit</th>
+                          <th>Saldo</th>
+                          <th>Saldo Sekarang :</th>
+                        </tr>
+                      </thead> -->
                     </table>
                   </div>
                 </div>

@@ -30,10 +30,12 @@ class C_Tahunan extends CI_Controller {
 		$kelas = $this->M_Kelas->getDataKelas();
 		$siswa = $this->M_Siswa->getDataSiswa();
 		$transaksi = $this->M_Transaksi->getDataTransaksiTahunan();
+        $saldo_saat_ini = $this->db->query("SELECT SUM(debit - kredit) as saldo_tahunan FROM riwayat_transaksi WHERE jenis_tabungan = 'Tabungan Tahunan'")->row_array();
 
 		$data['kelas'] = $kelas;
 		$data['siswa'] = $siswa;
 		$data['transaksi'] = $transaksi;
+		$data['saldo_saat_ini'] = $saldo_saat_ini;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
@@ -52,6 +54,7 @@ class C_Tahunan extends CI_Controller {
 		$kelas = $this->M_Kelas->getDataKelas();
 		$siswa = $this->M_Siswa->getDataSiswaDetail($id);
 		$transaksi = $this->M_Transaksi->getDataTransaksiTahunanDetail($id);
+        $saldo_saat_ini = $this->db->query("SELECT saldo_tahunan FROM riwayat_transaksi WHERE nis = '$id' ORDER BY id_transaksi DESC LIMIT 1")->row_array();
 
         $check_saldo = $this->db->query("SELECT saldo FROM riwayat_transaksi WHERE nis = $id ORDER BY id_transaksi DESC LIMIT 1")->row_array();
         $check_transaksi = $this->db->query("SELECT id_transaksi FROM riwayat_transaksi WHERE nis = $id ORDER BY id_transaksi DESC LIMIT 1")->row_array();
@@ -61,6 +64,7 @@ class C_Tahunan extends CI_Controller {
 		$data['kelas'] = $kelas;
 		$data['siswa'] = $siswa;
 		$data['transaksi'] = $transaksi;
+		$data['saldo_saat_ini'] = $saldo_saat_ini;
 		$data['check_saldo'] = $check_saldo;
 
 		$this->load->view('_partials/_head', $title);
