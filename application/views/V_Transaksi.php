@@ -95,7 +95,7 @@
                   <div class="col-lg-5">
                     <div class="form-group">
                         <label for="inputAddress2" class="form-label">Nama Siswa</label>
-                        <input class="form-control" list="data_siswa" type="text" name="nama_siswa" id="nama_siswa" placeholder="Cari Nama" onchange="return autofill();">
+                        <input class="form-control" list="data_siswa" type="text" name="nama_siswa" id="nama_siswa" placeholder="Cari Nama" onchange="return autofill();" required>
                     </div>
                     <div class="form-group">
                         <label for="inputAddress2" class="form-label">Kelas</label>
@@ -109,12 +109,12 @@
                   <div class="col-lg-7">
                     <div class="form-group">
                       <label for="inputAddress2" class="form-label">Nominal (IDR)</label>
-                      <input class="form-control" type="text" name="nominal" id="nominal" placeholder="Nominal (IDR)">
+                      <input class="form-control" type="text" name="nominal" id="nominal" placeholder="Nominal (IDR)" required>
                       <input class="form-control" type="hidden" name="check_saldo" id="debit" value="<?= $transaksi->saldo ?>" placeholder="Nominal (IDR)">
                     </div>
                     <div class="form-group">
                       <label for="inputAddress2" class="form-label">Keterangan</label>
-                      <input class="form-control" type="text" name="keterangan" id="keterangan" placeholder="Keterangan">
+                      <input class="form-control" type="text" name="keterangan" id="keterangan" placeholder="Keterangan" required>
                     </div>
                     <div class="form-group text-center">
                       <label for="inputAddress2" class="form-label">Jenis Tabungan</label>

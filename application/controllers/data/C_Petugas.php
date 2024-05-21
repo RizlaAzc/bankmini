@@ -8,6 +8,7 @@ class C_Petugas extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('M_Petugas');
+		date_default_timezone_set('Asia/Jakarta');
 
 		if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');

@@ -8,6 +8,9 @@ class C_Harian extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('M_Kelas');
+		$this->load->model('M_Siswa');
+		$this->load->model('M_Transaksi');
+        date_default_timezone_set('Asia/Jakarta');
 
 		if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');
@@ -15,17 +18,22 @@ class C_Harian extends CI_Controller {
         }
 		
 	}
+
 	public function index()
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-		$title['title'] = 'Data Kelas - Bank Mini';
+		$title['title'] = 'Tabungan Harian - Bank Mini';
 
 		$year['year'] = date('Y');
 
 		$kelas = $this->M_Kelas->getDataKelas();
+		$siswa = $this->M_Siswa->getDataSiswa();
+		$transaksi = $this->M_Transaksi->getDataTransaksiHarian();
 
 		$data['kelas'] = $kelas;
+		$data['siswa'] = $siswa;
+		$data['transaksi'] = $transaksi;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
@@ -33,71 +41,99 @@ class C_Harian extends CI_Controller {
 		$this->load->view('tabungan/harian/V_Harian', $data);
 		$this->load->view('_partials/_footer', $year);
 	}
-
-	public function edit($id)
+	public function mutasi($id)
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-		$title['title'] = 'Edit Kelas - Bank Mini';
+		$title['title'] = 'Mutasi Tabungan Harian - Bank Mini';
 
 		$year['year'] = date('Y');
 
-		$kelas = $this->M_Kelas->getDataKelasDetail($id);
+		$kelas = $this->M_Kelas->getDataKelas();
+		$siswa = $this->M_Siswa->getDataSiswaDetail($id);
+		$transaksi = $this->M_Transaksi->getDataTransaksiHarianDetail($id);
+
+        $check_saldo = $this->db->query("SELECT saldo FROM riwayat_transaksi WHERE nis = $id ORDER BY id_transaksi DESC LIMIT 1")->row_array();
+        $check_transaksi = $this->db->query("SELECT id_transaksi FROM riwayat_transaksi WHERE nis = $id ORDER BY id_transaksi DESC LIMIT 1")->row_array();
+        // var_dump($check_transaksi);
+        // die;
 
 		$data['kelas'] = $kelas;
+		$data['siswa'] = $siswa;
+		$data['transaksi'] = $transaksi;
+		$data['check_saldo'] = $check_saldo;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
 		$this->load->view('_partials/_sidebar');
-		$this->load->view('data/kelas/V_Edit', $data);
+		$this->load->view('tabungan/harian/V_Mutasi', $data);
 		$this->load->view('_partials/_footer', $year);
 	}
 
-	public function fungsi_tambah()
-    {
-        $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+	// public function edit($id)
+	// {
+	// 	$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $kelas = $this->input->post('kelas');
-        $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
+	// 	$title['title'] = 'Edit Kelas - Bank Mini';
 
-        $ArrInsert = array(
-            'kelas' => $kelas,
-            'kompetensi_keahlian' => $kompetensi_keahlian
-        );
+	// 	$year['year'] = date('Y');
 
-        $this->M_Kelas->insertDataKelas($ArrInsert);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
-		redirect($_SERVER['HTTP_REFERER']);
-    }
+	// 	$kelas = $this->M_Kelas->getDataKelasDetail($id);
 
-	public function fungsi_edit()
-    {
-        $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+	// 	$data['kelas'] = $kelas;
 
-        $id = $this->input->post('id_kelas');
-        $kelas = $this->input->post('kelas');
-        $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
+	// 	$this->load->view('_partials/_head', $title);
+	// 	$this->load->view('_partials/_navbar', $profil);
+	// 	$this->load->view('_partials/_sidebar');
+	// 	$this->load->view('data/kelas/V_Edit', $data);
+	// 	$this->load->view('_partials/_footer', $year);
+	// }
 
-        $ArrUpdate = array(
-            'id_kelas' => $id,
-            'kelas' => $kelas,
-            'kompetensi_keahlian' => $kompetensi_keahlian
-        );
+	// public function fungsi_tambah()
+    // {
+    //     $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
 
-        $this->M_Kelas->updateDataKelas($id, $ArrUpdate);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di edit!</div>');
-        redirect(base_url('kelas'));
-    }
+    //     $kelas = $this->input->post('kelas');
+    //     $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
 
-	public function fungsi_hapus($id)
-    {
-        $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+    //     $ArrInsert = array(
+    //         'kelas' => $kelas,
+    //         'kompetensi_keahlian' => $kompetensi_keahlian
+    //     );
 
-        $this->M_Kelas->hapusDataKelas($id);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+    //     $this->M_Kelas->insertDataKelas($ArrInsert);
+    //     $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
+	// 	redirect($_SERVER['HTTP_REFERER']);
+    // }
 
-        redirect($_SERVER['HTTP_REFERER']);
-    }
+	// public function fungsi_edit()
+    // {
+    //     $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+
+    //     $id = $this->input->post('id_kelas');
+    //     $kelas = $this->input->post('kelas');
+    //     $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
+
+    //     $ArrUpdate = array(
+    //         'id_kelas' => $id,
+    //         'kelas' => $kelas,
+    //         'kompetensi_keahlian' => $kompetensi_keahlian
+    //     );
+
+    //     $this->M_Kelas->updateDataKelas($id, $ArrUpdate);
+    //     $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di edit!</div>');
+    //     redirect(base_url('kelas'));
+    // }
+
+	// public function fungsi_hapus($id)
+    // {
+    //     $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+
+    //     $this->M_Kelas->hapusDataKelas($id);
+    //     $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+
+    //     redirect($_SERVER['HTTP_REFERER']);
+    // }
 
 	// public function export()
     // {
@@ -142,59 +178,59 @@ class C_Harian extends CI_Controller {
     //     exit;
     // }
 
-	public function import()
-    {
-        if(isset($_FILES["file"]["name"])){
-                // upload
-            $file_tmp = $_FILES['file']['tmp_name'];
-            $file_name = $_FILES['file']['name'];
-            $file_size =$_FILES['file']['size'];
-            $file_type=$_FILES['file']['type'];
-            // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
+	// public function import()
+    // {
+    //     if(isset($_FILES["file"]["name"])){
+    //             // upload
+    //         $file_tmp = $_FILES['file']['tmp_name'];
+    //         $file_name = $_FILES['file']['name'];
+    //         $file_size =$_FILES['file']['size'];
+    //         $file_type=$_FILES['file']['type'];
+    //         // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
             
-            $object = PHPExcel_IOFactory::load($file_tmp);
+    //         $object = PHPExcel_IOFactory::load($file_tmp);
     
-            foreach($object->getWorksheetIterator() as $worksheet){
+    //         foreach($object->getWorksheetIterator() as $worksheet){
     
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
+    //             $highestRow = $worksheet->getHighestRow();
+    //             $highestColumn = $worksheet->getHighestColumn();
     
-                for($row=4; $row<=$highestRow;  $row++){
+    //             for($row=4; $row<=$highestRow;  $row++){
     
-                    $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                    $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                    $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+    //                 $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+    //                 $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+    //                 $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+    //                 $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
 
-                    $data[] = array(
-                        'nis'          => $nis,
-                        'nama_siswa'          =>$nama_siswa,
-                        'kelas'         =>$kelas,
-                        'jenis_kelamin'         =>$jenis_kelamin
-                    );
+    //                 $data[] = array(
+    //                     'nis'          => $nis,
+    //                     'nama_siswa'          =>$nama_siswa,
+    //                     'kelas'         =>$kelas,
+    //                     'jenis_kelamin'         =>$jenis_kelamin
+    //                 );
     
-                } 
+    //             } 
     
-            }
+    //         }
 
     
-            $this->db->insert_batch('siswa', $data);
+    //         $this->db->insert_batch('siswa', $data);
     
-            $message = array(
-                'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
-            );
+    //         $message = array(
+    //             'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
+    //         );
             
-            $this->session->set_flashdata($message);
-            redirect($_SERVER['HTTP_REFERER']);
-        }
-        else
-        {
-                $message = array(
-                'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
-            );
+    //         $this->session->set_flashdata($message);
+    //         redirect($_SERVER['HTTP_REFERER']);
+    //     }
+    //     else
+    //     {
+    //             $message = array(
+    //             'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
+    //         );
             
-            $this->session->set_flashdata($message);
-            redirect($_SERVER['HTTP_REFERER']);
-        }
-    }
+    //         $this->session->set_flashdata($message);
+    //         redirect($_SERVER['HTTP_REFERER']);
+    //     }
+    // }
 }

@@ -5,7 +5,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Tabungan Harian</h4>
+                  <h4 class="card-title">Mutasi <?= $siswa->nama_siswa ?></h4>
                   <p class="card-description">
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Lakukan Transaksi
@@ -24,15 +24,16 @@
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table">
                       <thead>
                         <tr>
-                          <th class="text-center" style="width: 60px;">No</th>
-                          <th>NIS</th>
-                          <th>Nama Siswa</th>
-                          <th>Kelas</th>
+                          <th>Tanggal</th>
+                          <th>No. Transaksi</th>
+                          <th>Keterangan</th>
+                          <th>Debit</th>
+                          <th>Kredit</th>
                           <th>Saldo</th>
-                          <th style="width: 130px;">Aksi</th>
+                          <th>Nama Petugas</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -40,13 +41,26 @@
                         $no = 1;
                         foreach($transaksi as $transaksi){
                         ?>
-                        <tr>
-                          <td class="text-center"><?= $no++ ?></td>
-                          <td><?= $transaksi->nis ?></td>
-                          <td><?= $transaksi->nama_siswa ?></td>
-                          <td><?= $transaksi->kelas ?></td>
-                          <td><?= $transaksi->saldo_harian ?></td>
-                          <td><label class="badge badge-primary" style="margin-right: 3px;"><a class="text-primary" style="text-decoration: none;" href="<?= base_url('mutasi/' . $transaksi->nis) ?>">Lihat Mutasi</a></label></td>
+                        <?php
+                        $check_debit = $transaksi->debit;
+                        $check_kredit = $transaksi->kredit;
+                        if($check_debit != 0){
+                        ?>
+                        <tr class="bg-success text-light">
+                        <?php
+                        }else if($check_kredit != 0){
+                        ?>
+                          <tr class="bg-danger text-light">
+                        <?php
+                        }
+                        ?>
+                            <td><?= $transaksi->tanggal ?></td>
+                            <td><?= $transaksi->id_transaksi ?></td>
+                            <td><?= $transaksi->keterangan ?></td>
+                            <td><?= $transaksi->debit ?></td>
+                            <td><?= $transaksi->kredit ?></td>
+                            <td><?= $transaksi->saldo_harian ?></td>
+                            <td><?= $transaksi->nama_lengkap ?></td>
                         </tr>
                         <?php
                         }

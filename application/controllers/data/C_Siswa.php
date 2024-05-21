@@ -9,6 +9,7 @@ class C_Siswa extends CI_Controller {
 		
 		$this->load->model('M_Siswa');
 		$this->load->model('M_Kelas');
+        date_default_timezone_set('Asia/Jakarta');
 
 		if (!$this->session->userdata('email')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Harap Login terlebih dahulu!</div>');
