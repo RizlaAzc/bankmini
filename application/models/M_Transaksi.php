@@ -15,7 +15,7 @@ class M_Transaksi extends CI_Model
     function getDataTransaksiHarian()
     {
         $this->db->join('siswa', 'siswa.nis = riwayat_transaksi.nis');
-        $this->db->order_by("id_transaksi", "desc limit 1");
+        // $this->db->order_by("id_transaksi", "desc limit 1");
         $this->db->where('jenis_tabungan', 'Tabungan Harian');
         $this->db->group_by("nama_siswa");
         $query = $this->db->get('riwayat_transaksi');
@@ -42,7 +42,7 @@ class M_Transaksi extends CI_Model
         $this->db->join('petugas', 'petugas.id_petugas = riwayat_transaksi.id_petugas');
         $this->db->where('nis', $id);
         $this->db->where('jenis_tabungan', 'Tabungan Harian');
-        $this->db->order_by("id_transaksi", "desc");
+        $this->db->order_by("id_transaksi", "asc");
         $query =  $this->db->get('riwayat_transaksi');
         return $query->result();
     }
@@ -52,7 +52,7 @@ class M_Transaksi extends CI_Model
         $this->db->join('petugas', 'petugas.id_petugas = riwayat_transaksi.id_petugas');
         $this->db->where('nis', $id);
         $this->db->where('jenis_tabungan', 'Tabungan Tahunan');
-        $this->db->order_by("id_transaksi", "desc");
+        $this->db->order_by("id_transaksi", "asc");
         $query =  $this->db->get('riwayat_transaksi');
         return $query->result();
     }

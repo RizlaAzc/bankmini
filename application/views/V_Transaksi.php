@@ -110,7 +110,17 @@
                     <div class="form-group">
                       <label for="inputAddress2" class="form-label">Nominal (IDR)</label>
                       <input class="form-control" type="text" name="nominal" id="nominal" placeholder="Nominal (IDR)" required>
+                      <?php
+                      if($check_saldo == null){
+                      ?>
+                      <input class="form-control" type="hidden" name="check_saldo" id="debit" value="0" placeholder="Nominal (IDR)">
+                      <?php
+                      }else{
+                      ?>
                       <input class="form-control" type="hidden" name="check_saldo" id="debit" value="<?= $transaksi->saldo ?>" placeholder="Nominal (IDR)">
+                      <?php
+                      }
+                      ?>
                     </div>
                     <div class="form-group">
                       <label for="inputAddress2" class="form-label">Keterangan</label>

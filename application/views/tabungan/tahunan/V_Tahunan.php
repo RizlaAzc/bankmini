@@ -46,7 +46,7 @@
                           <td><?= $transaksi->nama_siswa ?></td>
                           <td><?= $transaksi->kelas ?></td>
                           <td><?= $transaksi->saldo_tahunan ?></td>
-                          <td><label class="badge badge-primary" style="margin-right: 3px;"><a class="text-primary" style="text-decoration: none;" href="<?= base_url('mutasi/' . $transaksi->nis) ?>">Lihat Mutasi</a></label></td>
+                          <td><label class="badge badge-primary" style="margin-right: 3px;"><a class="text-primary" style="text-decoration: none;" href="<?= base_url('mutasi_tahunan/' . $transaksi->nis) ?>">Lihat Mutasi</a></label></td>
                         </tr>
                         <?php
                         }

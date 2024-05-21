@@ -65,10 +65,10 @@ $route['lakukan_transaksi'] = 'C_Transaksi/transaksi';
 
 // Route Tabungan
 $route['tabungan_harian'] = 'tabungan/C_Harian';
-$route['mutasi/(:any)'] = 'tabungan/C_Harian/mutasi/$1';
+$route['mutasi_harian/(:any)'] = 'tabungan/C_Harian/mutasi/$1';
 
 $route['tabungan_tahunan'] = 'tabungan/C_Tahunan';
-$route['mutasi/(:any)'] = 'tabungan/C_Tahunan/mutasi/$1';
+$route['mutasi_tahunan/(:any)'] = 'tabungan/C_Tahunan/mutasi/$1';
 
 // Route Data
 $route['kelas'] = 'data/C_kelas';
