@@ -6,7 +6,14 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Tabel Tabungan Tahunan</h4>
-                  <p class="card-description">Total saldo tabungan tahunan berjumlah : <?= $saldo_saat_ini['saldo_tahunan'] ?>
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <p class="card-description">Total saldo tabungan tahunan berjumlah : <?= $saldo_saat_ini['saldo_tahunan'] ?>
+                    </div>
+                    <div class="col-lg-3">
+                      <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
+                    </div>
+                  </div>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Lakukan Transaksi
                   </button> -->
@@ -24,9 +31,9 @@
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table id="searchTable" class="table table-hover">
                       <thead>
-                        <tr>
+                        <tr class="header">
                           <th class="text-center" style="width: 60px;">No</th>
                           <th>NIS</th>
                           <th>Nama Siswa</th>

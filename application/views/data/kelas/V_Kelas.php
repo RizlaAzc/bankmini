@@ -7,12 +7,20 @@
                 <div class="card-body">
                   <h4 class="card-title">Tabel Kelas</h4>
                   <p class="card-description">
-                    <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Tambah Kelas
-                  </button>
-                  <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
-                  Impor Excel
-                  </button>
+                    <div class="row">
+                      <div class="col-lg-9">
+
+                        <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Tambah Kelas
+                      </button>
+                      <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                      Impor Excel
+                      </button>
+                      </div>
+                      <div class="col-lg-3">
+                      <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
+                      </div>
+                    </div>
                     <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">
                     Ekspor Excel
                     </button>
@@ -24,9 +32,9 @@
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table id="searchTable" class="table table-hover">
                       <thead>
-                        <tr>
+                        <tr class="header">
                           <th class="text-center" style="width: 60px;">No</th>
                           <th>Kelas</th>
                           <th>Kompetensi Keahlian</th>

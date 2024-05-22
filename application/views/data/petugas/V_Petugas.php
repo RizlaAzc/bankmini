@@ -5,7 +5,15 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Petugas</h4>
+                  <div class="row">
+                    <div class="col-lg-9">
+
+                      <h4 class="card-title">Tabel Petugas</h4>
+                    </div>
+                    <div class="col-lg-3">
+                    <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
+                    </div>
+                  </div>
                   <p class="card-description">
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Tambah Petugas
@@ -13,9 +21,9 @@
                   <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table id="searchTable" class="table table-hover">
                       <thead>
-                        <tr>
+                        <tr class="header">
                           <th class="text-center" style="width: 60px;">No</th>
                           <th>Nama Lengkap</th>
                           <th>Email</th>

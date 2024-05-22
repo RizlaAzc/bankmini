@@ -147,7 +147,7 @@ class C_Auth extends CI_Controller {
 			];
 
 			$this->db->insert('petugas', $data);
-			$this->session->set_flashdata('a', '<div class="alert alert-success" role="alert">Akun berhasil dibuat. Silahkan login!</div>');
+			$this->session->set_flashdata('a', '<div class="alert alert-success" role="alert">Akun berhasil dibuat. Menunggu persetujuan.</div>');
 			redirect('');
 		}
 	}

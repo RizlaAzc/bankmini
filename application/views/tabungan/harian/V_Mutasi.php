@@ -6,7 +6,14 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Mutasi <?= $siswa->nama_siswa ?></h4>
-                  <p class="card-description">Saldo saat ini : <?= $saldo_saat_ini['saldo_harian'] ?>
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <p class="card-description">Saldo saat ini : <?= $saldo_saat_ini['saldo_harian'] ?>
+                    </div>
+                    <div class="col-lg-3">
+                      <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
+                    </div>
+                  </div>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Lakukan Transaksi
                   </button> -->
@@ -24,9 +31,9 @@
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="searchTable" class="table">
                       <thead>
-                        <tr>
+                        <tr class="header">
                           <th>Tanggal</th>
                           <th>No. Transaksi</th>
                           <th>Keterangan</th>

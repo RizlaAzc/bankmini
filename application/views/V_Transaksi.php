@@ -9,10 +9,13 @@
                   <p class="card-description">
                     Total saldo keseluruhan berjumlah : <?= $saldo_saat_ini['saldo'] ?>
                     <div class="row mb-3">
-                      <div class="col-lg-2">
+                      <div class="col-lg-9">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Lakukan Transaksi
                         </button>
+                      </div>
+                      <div class="col-lg-3">
+                        <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
                       </div>
                     </div>
                   <!-- <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
@@ -29,9 +32,9 @@
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
                   <div class="table-responsive">
-                    <table class="table">
+                    <table id="searchTable" class="table">
                       <thead>
-                        <tr>
+                        <tr class="header">
                           <!-- <th class="text-center" style="width: 60px;">No</th> -->
                           <th>Tanggal</th>
                           <th>No. Transaksi</th>
