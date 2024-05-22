@@ -20,7 +20,7 @@
                   </button> -->
                   <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="overflow-y: auto; height: 360px;">
                     <table id="searchTable" class="table table-hover">
                       <thead>
                         <tr class="header">

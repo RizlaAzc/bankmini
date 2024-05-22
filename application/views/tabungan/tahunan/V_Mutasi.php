@@ -30,7 +30,7 @@
                     <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="overflow-y: auto; height: 400px;">
                     <table id="searchTable" class="table">
                       <thead>
                         <tr class="header">
