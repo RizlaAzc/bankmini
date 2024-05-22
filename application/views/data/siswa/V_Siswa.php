@@ -72,14 +72,14 @@
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog" style="transform: translate(0, -50%); top: 50%; margin: 0 auto;">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Tambah Siswa</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="<?= base_url('tambah_siswa') ?>" method="post">
-              <div class="modal-body">
+              <div class="modal-body" style="height: 450px; overflow-y: auto;">
                     <div class="form-group">
                         <label for="inputAddress" class="form-label">NIS</label>
                         <input type="text" class="form-control" id="inputAddress" name="nis" placeholder="NIS" required>

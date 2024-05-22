@@ -19,21 +19,23 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item d-none d-lg-block">
+          <!-- <li class="nav-item d-none d-lg-block">
             <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
               <span class="input-group-addon input-group-prepend border-right">
                 <span class="icon-calendar input-group-text calendar-icon" style="background-color: #e8ecef;"></span>
               </span>
               <input type="text" class="form-control" disabled>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="<?= base_url('assets/images/profil.png') ?>" alt="profil.png"> </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+            <button class="btn btn-danger text-white" style="padding-top: 9px; padding-bottom: 9px;" data-bs-toggle="modal" data-bs-target="#logout">Keluar dari halaman</button>
+              
+            <!-- <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> -->
+              <!-- <img class="img-xs rounded-circle" src="<?= base_url('assets/images/profil.png') ?>" alt="profil.png"> </a> -->
+            <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown"> -->
               <!-- <a class="dropdown-item" href="<?= base_url('profile') ?>"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i>My Profile</a> -->
-              <a class="dropdown-item" href="<?= base_url('logout') ?>"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Logout</a>
-            </div>
+              <!-- <a class="dropdown-item" href="<?= base_url('logout') ?>"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Logout</a> -->
+            <!-- </div> -->
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">

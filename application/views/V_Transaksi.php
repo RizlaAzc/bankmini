@@ -89,7 +89,7 @@
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog" style="max-width: 700px;">
+          <div class="modal-dialog" style="max-width: 700px; transform: translate(0, -50%); top: 50%; margin: 0 auto;">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Transaksi</h1>
@@ -151,14 +151,14 @@
               <div class="modal-footer">
                 <div class="form-group">
                 <label for="inputAddress2" class="form-label">Pilih Transaksi :</label>
-                <select class="form-control" style="width: 200px; margin-right: 231px;" name="jenis_transaksi" id="jenis_transaksi">
+                <select class="form-control" style="width: 200px; margin-right: 227px;" name="jenis_transaksi" id="jenis_transaksi">
                   <option class="form-control" selected="true" disabled="disabled">Belum dipilih</option>
                   <option class="form-control" value="debit">Debit</option>
                   <option class="form-control" value="kredit">Kredit</option>
                 </select>
                 </div>
                 <div class="form-group" style="margin-top: 30px;">
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="reset" class="btn btn-secondary" style="margin-right: 5px;">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </div>
