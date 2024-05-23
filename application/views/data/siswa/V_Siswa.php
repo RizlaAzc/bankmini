@@ -8,13 +8,17 @@
                   <h4 class="card-title">Tabel Siswa</h4>
                   <p class="card-description">
                     <div class="row mb-2">
-                      <div class="col-lg-9">
+                      <div class="col-lg-3">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Tambah Siswa
                         </button>
-                        <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
-                        Impor Excel
+                        <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                          Impor Excel
                         </button>
+                      </div>
+                      <div class="col-lg-6 text-center">
+                        <label class="badge badge-success" style="margin-right: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a></label>
+                        <label class="badge badge-warning"><a class="text-warning" style="text-decoration: none;" target="_blank" href="<?= base_url('pdf_siswa') ?>">Ekspor PDF</a></label>
                       </div>
                       <div class="col-lg-3">
                         <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">

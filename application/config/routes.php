@@ -91,6 +91,7 @@ $route['tambah_siswa'] = 'data/C_Siswa/fungsi_tambah';
 $route['edit_siswa/(:any)'] = 'data/C_Siswa/edit/$1';
 $route['fungsi_edit_siswa'] = 'data/C_Siswa/fungsi_edit';
 $route['fungsi_hapus_siswa/(:any)'] = 'data/C_Siswa/fungsi_hapus/$1';
+$route['pdf_siswa'] = 'data/C_Siswa/pdf';
 $route['export_siswa'] = 'data/C_Siswa/export';
 $route['import_siswa'] = 'data/C_Siswa/import';
 
