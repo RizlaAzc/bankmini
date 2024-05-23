@@ -9,10 +9,22 @@
                   <p class="card-description">
                     Total saldo keseluruhan berjumlah : <?= $saldo_saat_ini['saldo'] ?>
                     <div class="row mb-2">
-                      <div class="col-lg-9">
+                      <div class="col-lg-2">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Lakukan Transaksi
                         </button>
+                      </div>
+                      <div class="col-lg-7">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <label class="form-label" style="float: right; padding: 5px;" for=""><p>Pilih Tanggal :</p></label>
+                          </div>
+                          <div class="col-lg-9">
+                            <input class="form-control mx-auto" style="width: 250px; float: left; cursor: pointer;" type="text" name="daterange" value="" readonly/>
+                            <label class="badge badge-dark" style="margin-left: 10px; padding: 9px;"><a class="text-dark" style="text-decoration: none;" href="<?= base_url('transaksi') ?>">Reset</a></label>
+                            <label class="badge badge-warning" style="padding: 9px;"><a class="text-warning" style="text-decoration: none;" target="_blank" href="<?= base_url('pdf_transaksi') ?>">PDF</a></label>
+                          </div>
+                        </div>
                       </div>
                       <div class="col-lg-3">
                         <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
@@ -192,3 +204,26 @@
             });
           }
         </script>
+
+        <script>
+        $(function() {
+          $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+          }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            GFG_Fun(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+          });
+        });
+        </script>
+
+            <script>
+                function GFG_Fun(start, end) {
+                    var url = new URL("http://localhost/bankmini/transaksi");
+                    let params = new URLSearchParams(url.search);
+                    params.delete('dateStart');
+                    url.searchParams.append('dateStart', start);
+                    url.searchParams.append('dateEnd', end);
+                    history.pushState({}, '', url);
+                    location.reload();
+                }
+            </script>

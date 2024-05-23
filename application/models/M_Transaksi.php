@@ -11,6 +11,15 @@ class M_Transaksi extends CI_Model
         $query = $this->db->get('riwayat_transaksi');
         return $query->result();
     }
+
+    function getDataTransaksifiltered($date_start, $date_end)
+    {
+        $this->db->join('siswa', 'siswa.nis = riwayat_transaksi.nis');
+        $this->db->where("tanggal BETWEEN '$date_start' AND '$date_end'");
+        $this->db->order_by("id_transaksi", "asc");
+        $query = $this->db->get('riwayat_transaksi');
+        return $query->result();
+    }
     
     function getDataTransaksiHarian()
     {

@@ -26,7 +26,22 @@ class C_Transaksi extends CI_Controller {
 
 		$year['year'] = date('Y');
 
-		$transaksi = $this->M_Transaksi->getDataTransaksi();
+        $date_start = $this->input->get('dateStart');
+        $date_end = $this->input->get('dateEnd');
+
+        $if_start = $date_start;
+        $if_end = $date_end;
+
+        $this->session->set_flashdata('if_start', $if_start);
+        $this->session->set_flashdata('if_end', $if_end);
+
+        if ($date_start) {
+            $transaksi = $this->M_Transaksi->getDataTransaksifiltered($date_start, $date_end);
+        } else {
+            $transaksi = $this->M_Transaksi->getDataTransaksi();
+        }
+
+		// $transaksi = $this->M_Transaksi->getDataTransaksi();
 		$siswa = $this->M_Siswa->getDataSiswa();
         $check_saldo = $this->db->query("SELECT saldo FROM riwayat_transaksi")->result();
         $saldo_saat_ini = $this->db->query("SELECT saldo FROM riwayat_transaksi ORDER BY id_transaksi DESC LIMIT 1")->row_array();
@@ -245,6 +260,31 @@ class C_Transaksi extends CI_Controller {
             }
 
         }
+    }
+
+    public function pdf()
+    {
+        $if_start = $this->session->flashdata('if_start');
+        $if_end = $this->session->flashdata('if_end');
+        
+        if (isset($if_start)) {
+            $transaksi = $this->M_Transaksi->getDataTransaksifiltered($if_start, $if_end);
+        } else {
+            $transaksi = $this->M_Transaksi->getDataTransaksi();
+        }
+        $data['transaksi'] = $transaksi;
+
+        $this->load->library('dompdf_gen');
+        $this->load->view('V_PdfTransaksi', $data);
+
+        $paper_size = 'A4';
+        $orientation = 'portrait';
+        $html = $this->output->get_output();
+
+        $this->dompdf->set_paper($paper_size, $orientation);
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream('Data Transaksi.pdf', array('Attachment' => 0));
     }
 
     // public function export()

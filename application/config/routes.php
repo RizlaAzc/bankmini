@@ -62,6 +62,7 @@ $route['logout'] = 'C_Auth/logout';
 // Route Transaksi
 $route['transaksi'] = 'C_Transaksi';
 $route['lakukan_transaksi'] = 'C_Transaksi/transaksi';
+$route['pdf_transaksi'] = 'C_Transaksi/pdf';
 
 // Route Tabungan
 $route['tabungan_harian'] = 'tabungan/C_Harian';
