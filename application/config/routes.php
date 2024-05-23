@@ -93,3 +93,6 @@ $route['fungsi_edit_siswa'] = 'data/C_Siswa/fungsi_edit';
 $route['fungsi_hapus_siswa/(:any)'] = 'data/C_Siswa/fungsi_hapus/$1';
 $route['export_siswa'] = 'data/C_Siswa/export';
 $route['import_siswa'] = 'data/C_Siswa/import';
+
+// Route Laporan
+$route['laporan_tahunan'] = 'laporan/C_LaporanTahunan';

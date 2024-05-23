@@ -20,10 +20,10 @@
         <span class="menu-title">Tabungan Tahunan</span>
       </a>
     </li>
+    <li class="nav-item nav-category">Lainnya</li>
     <?php
       if ($this->session->userdata('level') == 'Admin') {
     ?>
-    <li class="nav-item nav-category">Lainnya</li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="menu-icon mdi mdi-database"></i>
@@ -41,5 +41,19 @@
     <?php
       }
     ?>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#tables1" aria-expanded="false" aria-controls="tables">
+        <i class="menu-icon mdi mdi-file-chart"></i>
+        <span class="menu-title">Laporan</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="tables1">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="<?= base_url('laporan_harian') ?>">Laporan Harian</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?= base_url('laporan_bulanan') ?>">Laporan Bulanan</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?= base_url('laporan_tahunan') ?>">Laporan Tahunan</a></li>
+        </ul>
+      </div>
+    </li>
   </ul>
 </nav>

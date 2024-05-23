@@ -8,7 +8,7 @@
                   <h4 class="card-title">Tabel Transaksi</h4>
                   <p class="card-description">
                     Total saldo keseluruhan berjumlah : <?= $saldo_saat_ini['saldo'] ?>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                       <div class="col-lg-9">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Lakukan Transaksi

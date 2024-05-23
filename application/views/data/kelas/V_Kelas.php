@@ -7,18 +7,17 @@
                 <div class="card-body">
                   <h4 class="card-title">Tabel Kelas</h4>
                   <p class="card-description">
-                    <div class="row">
+                    <div class="row mb-2">
                       <div class="col-lg-9">
-
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Tambah Kelas
-                      </button>
-                      <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
-                      Impor Excel
-                      </button>
+                        </button>
+                        <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                        Impor Excel
+                        </button>
                       </div>
                       <div class="col-lg-3">
-                      <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
+                        <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
                       </div>
                     </div>
                     <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">

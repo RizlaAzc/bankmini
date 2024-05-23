@@ -7,7 +7,7 @@
                 <div class="card-body">
                   <h4 class="card-title">Tabel Siswa</h4>
                   <p class="card-description">
-                    <div class="row">
+                    <div class="row mb-2">
                       <div class="col-lg-9">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Tambah Siswa
