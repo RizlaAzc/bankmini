@@ -15,6 +15,18 @@ class M_Siswa extends CI_Model
         $this->db->insert('siswa', $data);
     }
 
+    function insertDataSiswaImport($data)
+    {
+        $this->db->insert_batch('siswa', $data);
+        if($this->db->affected_rows() > 0)
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
     function getDataSiswaDetail($id)
     {
         $this->db->where('nis', $id);

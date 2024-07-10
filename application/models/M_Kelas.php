@@ -6,6 +6,8 @@ class M_Kelas extends CI_Model
 {
     function getDataKelas()
     {
+        $this->db->order_by("kelas", "asc");
+        $this->db->order_by("kompetensi_keahlian", "asc");
         $query = $this->db->get('kelas');
         return $query->result();
     }
@@ -13,6 +15,18 @@ class M_Kelas extends CI_Model
     function insertDataKelas($data)
     {
         $this->db->insert('kelas', $data);
+    }
+
+    function insertDataKelasImport($data)
+    {
+        $this->db->insert_batch('kelas', $data);
+        if($this->db->affected_rows() > 0)
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 
     function getDataKelasDetail($id)

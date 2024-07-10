@@ -5,22 +5,28 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-lg-9">
-
-                      <h4 class="card-title">Tabel Petugas</h4>
-                    </div>
-                    <div class="col-lg-3">
-                    <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
-                    </div>
-                  </div>
+                      <h4 class="card-title">Data Petugas</h4>
                   <p class="card-description">
+                    <div class="row">
+                    <div class="col-lg-9">
+                        <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> -->
+                        <!-- Tambah Kelas
+                        </button> -->
+                        <label class="badge badge-success" style=""><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_petugas') ?>">Ekspor Excel</a></label>
+                        <!-- <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                        Impor Excel
+                        </button> -->
+                      </div>
+                      <div class="col-lg-3">
+                      <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
+                      </div>
+                    </div>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Tambah Petugas
                   </button> -->
                   <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive" style="overflow-y: auto; height: 360px;">
+                  <div class="table-responsive" style="overflow-y: auto; max-height: 360px;">
                     <table id="searchTable" class="table table-hover">
                       <thead>
                         <tr class="header">
@@ -85,8 +91,6 @@
           </div>
         </div>
         <!-- content-wrapper ends -->
-
-        <!-- Button trigger modal -->
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

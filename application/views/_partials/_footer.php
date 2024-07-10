@@ -13,42 +13,6 @@
 </div>
 <!-- container-scroller -->
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="pembayaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Transaksi</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <form action="<?= base_url('admin/payment/C_Transaksi/fungsi_tambah') ?>" method="post">
-              <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputAddress" class="form-label">ID SPP</label>
-                        <input type="text" class="form-control" id="inputAddress" name="id_spp" placeholder="ID SPP" >
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress" class="form-label">NISN</label>
-                        <input type="text" class="form-control" id="inputAddress" name="nisn" placeholder="NISN" >
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">Tahun Dibayar</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="tahun_dibayar" placeholder="Tahun Dibayar">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2" class="form-label">Nominal</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" name="jumlah_bayar" placeholder="Nominal">
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </form>
-            </div>
-          </div>
-        </div> -->
-
     <!-- Modal -->
     <div class="modal fade" id="logout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -62,7 +26,6 @@
               <p>Anda yakin ingin keluar ?</p>
             </div>
             <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
               <button type="submit" class="btn btn-danger">Logout</button>
             </div>
           </form>

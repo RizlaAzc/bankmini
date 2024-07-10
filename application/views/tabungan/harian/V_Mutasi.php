@@ -5,10 +5,12 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Mutasi <?= $siswa->nama_siswa ?></h4>
+                  <a href="<?= base_url('tabungan_harian') ?>" class="btn btn-outline-primary" style="float: right;">Kembali</a>
+                  <h4 class="card-title">Mutasi Tabungan Harian (<?= $siswa->nama_siswa ?>)</h4>
+                  <p class="card-description">Saldo saat ini : Rp<?= $saldo_saat_ini['saldo_harian'] ?>
                   <div class="row">
                     <div class="col-lg-9">
-                      <p class="card-description">Saldo saat ini : <?= $saldo_saat_ini['saldo_harian'] ?>
+                    <label class="badge badge-success" style="margin-left: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_mutasi_harian/' . $siswa->nis ) ?>">Ekspor Excel</a></label>
                     </div>
                     <div class="col-lg-3">
                       <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
@@ -30,7 +32,7 @@
                     <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive" style="overflow-y: auto; height: 400px;">
+                  <div class="table-responsive" style="overflow-y: auto; max-height: 400px;">
                     <table id="searchTable" class="table">
                       <thead>
                         <tr class="header">
@@ -64,26 +66,15 @@
                             <td><?= $transaksi->tanggal ?></td>
                             <td><?= $transaksi->id_transaksi ?></td>
                             <td><?= $transaksi->keterangan ?></td>
-                            <td><?= $transaksi->debit ?></td>
-                            <td><?= $transaksi->kredit ?></td>
-                            <td><?= $transaksi->saldo_harian ?></td>
+                            <td>Rp<?= $transaksi->debit ?></td>
+                            <td>Rp<?= $transaksi->kredit ?></td>
+                            <td>Rp<?= $transaksi->saldo_harian ?></td>
                             <td><?= $transaksi->nama_lengkap ?></td>
                           </tr>
                           <?php
                         }
                         ?>
                       </tbody>
-                      <!-- <thead>
-                        <tr>
-                          <th>Tanggal</th>
-                          <th>No. Transaksi</th>
-                          <th>Keterangan</th>
-                          <th>Debit</th>
-                          <th>Kredit</th>
-                          <th>Saldo</th>
-                          <th>Saldo Sekarang :</th>
-                        </tr>
-                      </thead> -->
                     </table>
                   </div>
                 </div>

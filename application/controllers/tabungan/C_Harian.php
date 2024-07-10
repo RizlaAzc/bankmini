@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require FCPATH.'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class C_Harian extends CI_Controller {
 
@@ -27,15 +31,20 @@ class C_Harian extends CI_Controller {
 
 		$year['year'] = date('Y');
 
+        $hari_ini = date('Y-m-d');
 		$kelas = $this->M_Kelas->getDataKelas();
 		$siswa = $this->M_Siswa->getDataSiswa();
 		$transaksi = $this->M_Transaksi->getDataTransaksiHarian();
         $saldo_saat_ini = $this->db->query("SELECT SUM(debit - kredit) as saldo_harian FROM riwayat_transaksi WHERE jenis_tabungan = 'Tabungan Harian'")->row_array();
+        $saldo_harian_masuk_hari_ini = $this->db->query("SELECT SUM(debit) as saldo_harian_masuk_hari_ini FROM riwayat_transaksi WHERE jenis_tabungan = 'Tabungan Harian' AND tanggal = '$hari_ini'")->row_array();
+        $saldo_harian_keluar_hari_ini = $this->db->query("SELECT SUM(kredit) as saldo_harian_keluar_hari_ini FROM riwayat_transaksi WHERE jenis_tabungan = 'Tabungan Harian' AND tanggal = '$hari_ini'")->row_array();
 
 		$data['kelas'] = $kelas;
 		$data['siswa'] = $siswa;
 		$data['transaksi'] = $transaksi;
 		$data['saldo_saat_ini'] = $saldo_saat_ini;
+		$data['saldo_harian_masuk_hari_ini'] = $saldo_harian_masuk_hari_ini;
+		$data['saldo_harian_keluar_hari_ini'] = $saldo_harian_keluar_hari_ini;
 
 		$this->load->view('_partials/_head', $title);
 		$this->load->view('_partials/_navbar', $profil);
@@ -43,6 +52,7 @@ class C_Harian extends CI_Controller {
 		$this->load->view('tabungan/harian/V_Harian', $data);
 		$this->load->view('_partials/_footer', $year);
 	}
+
 	public function mutasi($id)
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
@@ -55,12 +65,8 @@ class C_Harian extends CI_Controller {
 		$siswa = $this->M_Siswa->getDataSiswaDetail($id);
 		$transaksi = $this->M_Transaksi->getDataTransaksiHarianDetail($id);
 		$saldo_saat_ini = $this->db->query("SELECT saldo_harian FROM riwayat_transaksi WHERE nis = '$id' ORDER BY id_transaksi DESC LIMIT 1")->row_array();
-        // var_dump($saldo_saat_ini);
-        // die;
         $check_saldo = $this->db->query("SELECT saldo FROM riwayat_transaksi WHERE nis = $id ORDER BY id_transaksi DESC LIMIT 1")->row_array();
         $check_transaksi = $this->db->query("SELECT id_transaksi FROM riwayat_transaksi WHERE nis = $id ORDER BY id_transaksi DESC LIMIT 1")->row_array();
-        // var_dump($check_transaksi);
-        // die;
 
 		$data['kelas'] = $kelas;
 		$data['siswa'] = $siswa;
@@ -75,167 +81,71 @@ class C_Harian extends CI_Controller {
 		$this->load->view('_partials/_footer', $year);
 	}
 
-	// public function edit($id)
-	// {
-	// 	$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+    public function export()
+    {
+        $data_tabungan_harian = $this->M_Transaksi->getDataTransaksiHarian();
 
-	// 	$title['title'] = 'Edit Kelas - Bank Mini';
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Data Tabungan Harian - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'No');
+        $activeWorksheet->setCellValue('B1', 'NIS');
+        $activeWorksheet->setCellValue('C1', 'Nama Siswa');
+        $activeWorksheet->setCellValue('D1', 'Kelas');
 
-	// 	$year['year'] = date('Y');
+        $no = 1;
+        $sn = 2;
 
-	// 	$kelas = $this->M_Kelas->getDataKelasDetail($id);
+        foreach($data_tabungan_harian as $data_tabungan_harian){
+            $activeWorksheet->setCellValue('A'. $sn, $no++);
+            $activeWorksheet->setCellValue('B'. $sn, $data_tabungan_harian->nis);
+            $activeWorksheet->setCellValue('C'. $sn, $data_tabungan_harian->nama_siswa);
+            $activeWorksheet->setCellValue('D'. $sn, $data_tabungan_harian->kelas);
+            $sn++;
+        }
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
+    }
 
-	// 	$data['kelas'] = $kelas;
+    public function export_mutasi($id)
+    {
+        $mutasi_tabungan_harian = $this->M_Transaksi->getDataTransaksiHarianDetail($id);
 
-	// 	$this->load->view('_partials/_head', $title);
-	// 	$this->load->view('_partials/_navbar', $profil);
-	// 	$this->load->view('_partials/_sidebar');
-	// 	$this->load->view('data/kelas/V_Edit', $data);
-	// 	$this->load->view('_partials/_footer', $year);
-	// }
+        $judul = $this->M_Siswa->getDataSiswaDetail($id);
+        
+        $nama = $judul->nama_siswa;
 
-	// public function fungsi_tambah()
-    // {
-    //     $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Mutasi Tabungan Harian - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'No');
+        $activeWorksheet->setCellValue('B1', 'Tanggal');
+        $activeWorksheet->setCellValue('C1', 'No. Transaksi');
+        $activeWorksheet->setCellValue('D1', 'Keterangan');
+        $activeWorksheet->setCellValue('E1', 'Debit');
+        $activeWorksheet->setCellValue('F1', 'Kredit');
+        $activeWorksheet->setCellValue('G1', 'Saldo');
+        $activeWorksheet->setCellValue('H1', 'Nama Petugas');
 
-    //     $kelas = $this->input->post('kelas');
-    //     $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
+        $no = 1;
+        $sn = 2;
 
-    //     $ArrInsert = array(
-    //         'kelas' => $kelas,
-    //         'kompetensi_keahlian' => $kompetensi_keahlian
-    //     );
-
-    //     $this->M_Kelas->insertDataKelas($ArrInsert);
-    //     $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
-	// 	redirect($_SERVER['HTTP_REFERER']);
-    // }
-
-	// public function fungsi_edit()
-    // {
-    //     $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
-
-    //     $id = $this->input->post('id_kelas');
-    //     $kelas = $this->input->post('kelas');
-    //     $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
-
-    //     $ArrUpdate = array(
-    //         'id_kelas' => $id,
-    //         'kelas' => $kelas,
-    //         'kompetensi_keahlian' => $kompetensi_keahlian
-    //     );
-
-    //     $this->M_Kelas->updateDataKelas($id, $ArrUpdate);
-    //     $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil di edit!</div>');
-    //     redirect(base_url('kelas'));
-    // }
-
-	// public function fungsi_hapus($id)
-    // {
-    //     $profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
-
-    //     $this->M_Kelas->hapusDataKelas($id);
-    //     $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
-
-    //     redirect($_SERVER['HTTP_REFERER']);
-    // }
-
-	// public function export()
-    // {
-    //     $kelas = $this->M_Kelas->getDataKelas();
-    //     $data['kelas'] = $kelas;
-
-    //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
-    //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
-
-    //     $object = new PHPExcel();
-
-    //     $object->getProperties()->setCreator("Bank Mini");
-    //     $object->getProperties()->setLastModifiedBy("Bank Mini");
-    //     $object->getProperties()->setTitle("Data Kelas");
-
-    //     $object->setActiveSheetIndex(0);
-
-    //     $object->getActiveSheet()->setCellValue('A1', 'NIM');
-    //     $object->getActiveSheet()->setCellValue('B1', 'Nama Kelas');
-
-    //     $baris = 2;
-    //     // $no = 1;
-
-    //     foreach($data['kelas'] as $kelas){
-    //         $object->getActivateSheet()->setCellValue('A'. $baris, $kelas->nis);
-    //         $object->getActivateSheet()->setCellValue('B'. $baris, $kelas->nama_kelas);
-
-    //         $baris++;
-    //     }
-
-    //     $filename = "Data_Kelas". '.xlsx';
-
-    //     $object->getActiveSheet()->setTitle("Data Kelas");
-
-    //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    //     header('Content-Disposition: attachment; filename="'.$filename.'"');
-    //     header('Cache-Control: max-age=0');
-
-    //     $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
-    //     $writer->save('php://output');
-
-    //     exit;
-    // }
-
-	// public function import()
-    // {
-    //     if(isset($_FILES["file"]["name"])){
-    //             // upload
-    //         $file_tmp = $_FILES['file']['tmp_name'];
-    //         $file_name = $_FILES['file']['name'];
-    //         $file_size =$_FILES['file']['size'];
-    //         $file_type=$_FILES['file']['type'];
-    //         // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
-            
-    //         $object = PHPExcel_IOFactory::load($file_tmp);
-    
-    //         foreach($object->getWorksheetIterator() as $worksheet){
-    
-    //             $highestRow = $worksheet->getHighestRow();
-    //             $highestColumn = $worksheet->getHighestColumn();
-    
-    //             for($row=4; $row<=$highestRow;  $row++){
-    
-    //                 $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-    //                 $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-    //                 $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-    //                 $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-
-    //                 $data[] = array(
-    //                     'nis'          => $nis,
-    //                     'nama_siswa'          =>$nama_siswa,
-    //                     'kelas'         =>$kelas,
-    //                     'jenis_kelamin'         =>$jenis_kelamin
-    //                 );
-    
-    //             } 
-    
-    //         }
-
-    
-    //         $this->db->insert_batch('siswa', $data);
-    
-    //         $message = array(
-    //             'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
-    //         );
-            
-    //         $this->session->set_flashdata($message);
-    //         redirect($_SERVER['HTTP_REFERER']);
-    //     }
-    //     else
-    //     {
-    //             $message = array(
-    //             'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
-    //         );
-            
-    //         $this->session->set_flashdata($message);
-    //         redirect($_SERVER['HTTP_REFERER']);
-    //     }
-    // }
+        foreach($mutasi_tabungan_harian as $mutasi_tabungan_harian){
+            $activeWorksheet->setCellValue('A'. $sn, $no++);
+            $activeWorksheet->setCellValue('B'. $sn, $mutasi_tabungan_harian->tanggal);
+            $activeWorksheet->setCellValue('C'. $sn, $mutasi_tabungan_harian->id_transaksi);
+            $activeWorksheet->setCellValue('D'. $sn, $mutasi_tabungan_harian->keterangan);
+            $activeWorksheet->setCellValue('E'. $sn, $mutasi_tabungan_harian->debit);
+            $activeWorksheet->setCellValue('F'. $sn, $mutasi_tabungan_harian->kredit);
+            $activeWorksheet->setCellValue('G'. $sn, $mutasi_tabungan_harian->saldo);
+            $activeWorksheet->setCellValue('H'. $sn, $mutasi_tabungan_harian->nama_lengkap);
+            $sn++;
+        }
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
+    }
 }

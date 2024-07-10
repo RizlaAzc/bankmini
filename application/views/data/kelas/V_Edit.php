@@ -29,7 +29,7 @@
                       <input type="text" class="form-control" id="exampleInputUsername1" name="kompetensi_keahlian" value="<?= $kelas->kompetensi_keahlian ?>" placeholder="Kompetensi Keahlian">
                     </div>
                     <button type="submit" class="btn btn-primary me-2">Submit</button>
-                    <a href="<?= base_url('kelas') ?>" class="btn btn-light">Cancel</a>
+                    <a href="<?= base_url('kelas') ?>" class="btn btn-light">Batal</a>
                   </form>
                 </div>
               </div>

@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require FCPATH.'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class C_Siswa extends CI_Controller {
 
@@ -111,126 +115,102 @@ class C_Siswa extends CI_Controller {
 
         redirect($_SERVER['HTTP_REFERER']);
     }
-
-    public function pdf()
+    
+    
+    public function download_template()
     {
-        $siswa = $this->M_Siswa->getDataSiswa();
-		
-        $data['siswa'] = $siswa;
-
-        $this->load->library('dompdf_gen');
-        $this->load->view('V_Pdf', $data);
-
-        $paper_size = 'A4';
-        $orientation = 'portrait';
-        $html = $this->output->get_output();
-
-        $this->dompdf->set_paper($paper_size, $orientation);
-        $this->dompdf->load_html($html);
-        $this->dompdf->render();
-        $this->dompdf->stream('Data Siswa.pdf', array('Attachment' => 0));
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Template Import Data Siswa - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'NIS');
+        $activeWorksheet->setCellValue('B1', 'Nama Siswa');
+        $activeWorksheet->setCellValue('C1', 'Jenis Kelamin');
+        $activeWorksheet->setCellValue('D1', 'Kelas');
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
     }
 
-	public function export()
+    public function import()
     {
-        $siswa = $this->M_Siswa->getDataSiswa();
-        $data['siswa'] = $siswa;
-
-        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
-        require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
-
-        $object = new PHPExcel();
-
-        $object->getProperties()->setCreator("Bank Mini");
-        $object->getProperties()->setLastModifiedBy("Bank Mini");
-        $object->getProperties()->setTitle("Data Siswa");
-
-        $object->setActiveSheetIndex(0);
-
-        $object->getActiveSheet()->setCellValue('A1', 'NIS');
-        $object->getActiveSheet()->setCellValue('B1', 'Nama Siswa');
-        $object->getActiveSheet()->setCellValue('C1', 'Jenis Kelamin');
-        $object->getActiveSheet()->setCellValue('D1', 'Kelas');
-
-        $baris = 2;
-        // $no = 1;
-
-        foreach($data['siswa'] as $siswa){
-            $object->getActiveSheet()->setCellValue('A'. $baris, $siswa->nis);
-            $object->getActiveSheet()->setCellValue('B'. $baris, $siswa->nama_siswa);
-            $object->getActiveSheet()->setCellValue('C'. $baris, $siswa->jenis_kelamin);
-            $object->getActiveSheet()->setCellValue('D'. $baris, $siswa->kelas);
-
-            $baris++;
+        $upload_file = $_FILES['file']['name'];
+        $extension = pathinfo($upload_file, PATHINFO_EXTENSION);
+        if($extension == 'csv')
+        {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        }else if($extension == 'xls')
+        {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        }else
+        {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         }
-
-        $filename = "Data_Siswa". '.xlsx';
-
-        $object->getActiveSheet()->setTitle("Data Siswa");
-
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="'.$filename.'"');
-        header('Cache-Control: max-age=0');
-
-        $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
-        $writer->save('php://output');
-
-        exit;
+        $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+        $sheetdata = $spreadsheet->getActiveSheet()->toArray();
+        $sheetcount = count($sheetdata);
+        if($sheetcount > 1)
+        {
+            $data = array();
+            for ($i = 1; $i < $sheetcount; $i++){
+                $nis = $sheetdata[$i][0];
+                $nama_siswa = $sheetdata[$i][1];
+                $jenis_kelamin = $sheetdata[$i][2];
+                $kelas = $sheetdata[$i][3];
+                $data[] = array(
+                    'nis' => $nis,
+                    'nama_siswa' => $nama_siswa,
+                    'jenis_kelamin' => $jenis_kelamin,
+                    'kelas' => $kelas,
+                );
+            }
+            $insertdata = $this->M_Siswa->insertDataSiswaImport($data);
+            if($insertdata)
+            {
+                $message = array(
+                    'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
+                );
+                
+                $this->session->set_flashdata($message);
+                redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $message = array(
+                    'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
+                );
+                
+                $this->session->set_flashdata($message);
+                redirect($_SERVER['HTTP_REFERER']);   
+            }
+        }
     }
+    
+    public function export()
+    {
+        $data_siswa = $this->M_Siswa->getDataSiswa();
 
-	// public function import()
-    // {
-    //     if(isset($_FILES["file"]["name"])){
-    //             // upload
-    //         $file_tmp = $_FILES['file']['tmp_name'];
-    //         $file_name = $_FILES['file']['name'];
-    //         $file_size =$_FILES['file']['size'];
-    //         $file_type=$_FILES['file']['type'];
-    //         // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
-            
-    //         $object = PHPExcel_IOFactory::load($file_tmp);
-    
-    //         foreach($object->getWorksheetIterator() as $worksheet){
-    
-    //             $highestRow = $worksheet->getHighestRow();
-    //             $highestColumn = $worksheet->getHighestColumn();
-    
-    //             for($row=4; $row<=$highestRow;  $row++){
-    
-    //                 $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-    //                 $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-    //                 $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-    //                 $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Data Siswa - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'No');
+        $activeWorksheet->setCellValue('B1', 'NIS');
+        $activeWorksheet->setCellValue('C1', 'Nama Siswa');
+        $activeWorksheet->setCellValue('D1', 'Jenis Kelamin');
+        $activeWorksheet->setCellValue('E1', 'Kelas');
 
-    //                 $data[] = array(
-    //                     'nis'          => $nis,
-    //                     'nama_siswa'          =>$nama_siswa,
-    //                     'kelas'         =>$kelas,
-    //                     'jenis_kelamin'         =>$jenis_kelamin
-    //                 );
-    
-    //             } 
-    
-    //         }
-
-    
-    //         $this->db->insert_batch('siswa', $data);
-    
-    //         $message = array(
-    //             'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
-    //         );
-            
-    //         $this->session->set_flashdata($message);
-    //         redirect($_SERVER['HTTP_REFERER']);
-    //     }
-    //     else
-    //     {
-    //             $message = array(
-    //             'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
-    //         );
-            
-    //         $this->session->set_flashdata($message);
-    //         redirect($_SERVER['HTTP_REFERER']);
-    //     }
-    // }
+        $no = 1;
+        $sn = 2;
+        
+        foreach($data_siswa as $data_siswa){
+            $activeWorksheet->setCellValue('A'. $sn, $no++);
+            $activeWorksheet->setCellValue('B'. $sn, $data_siswa->nis);
+            $activeWorksheet->setCellValue('C'. $sn, $data_siswa->nama_siswa);
+            $activeWorksheet->setCellValue('D'. $sn, $data_siswa->jenis_kelamin);
+            $activeWorksheet->setCellValue('E'. $sn, $data_siswa->kelas);
+            $sn++;
+        }
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
+    }
 }

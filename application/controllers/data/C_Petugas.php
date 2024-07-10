@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require FCPATH.'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class C_Petugas extends CI_Controller {
 
@@ -97,4 +101,36 @@ class C_Petugas extends CI_Controller {
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function export()
+    {
+        $data_petugas = $this->M_Petugas->getDataPetugas();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Data Petugas - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'No');
+        $activeWorksheet->setCellValue('B1', 'Nama Lengkap');
+        $activeWorksheet->setCellValue('C1', 'Email');
+        $activeWorksheet->setCellValue('D1', 'Posisi');
+        $activeWorksheet->setCellValue('E1', 'Status');
+        $activeWorksheet->setCellValue('F1', 'Waktu Dibuat');
+
+		$no = 1;
+        $sn = 2;
+
+        foreach($data_petugas as $data_petugas){
+            $activeWorksheet->setCellValue('A'. $sn, $no++);
+            $activeWorksheet->setCellValue('B'. $sn, $data_petugas->nama_lengkap);
+            $activeWorksheet->setCellValue('C'. $sn, $data_petugas->email);
+            $activeWorksheet->setCellValue('D'. $sn, $data_petugas->level);
+            $activeWorksheet->setCellValue('E'. $sn, $data_petugas->status);
+            $activeWorksheet->setCellValue('F'. $sn, $data_petugas->waktu_dibuat);
+            $sn++;
+        }
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
+    }
 }

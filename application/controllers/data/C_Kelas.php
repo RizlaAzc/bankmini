@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require FCPATH.'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class C_Kelas extends CI_Controller {
 
@@ -16,6 +20,7 @@ class C_Kelas extends CI_Controller {
         }
 		
 	}
+
 	public function index()
 	{
 		$profil['profil'] = $this->db->get_where('petugas', ['email' => $this->session->userdata('email')])->row_array();
@@ -100,102 +105,90 @@ class C_Kelas extends CI_Controller {
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-	// public function export()
-    // {
-    //     $kelas = $this->M_Kelas->getDataKelas();
-    //     $data['kelas'] = $kelas;
-
-    //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel.php');
-    //     require(APPPATH. 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
-
-    //     $object = new PHPExcel();
-
-    //     $object->getProperties()->setCreator("Bank Mini");
-    //     $object->getProperties()->setLastModifiedBy("Bank Mini");
-    //     $object->getProperties()->setTitle("Data Kelas");
-
-    //     $object->setActiveSheetIndex(0);
-
-    //     $object->getActiveSheet()->setCellValue('A1', 'NIM');
-    //     $object->getActiveSheet()->setCellValue('B1', 'Nama Kelas');
-
-    //     $baris = 2;
-    //     // $no = 1;
-
-    //     foreach($data['kelas'] as $kelas){
-    //         $object->getActivateSheet()->setCellValue('A'. $baris, $kelas->nis);
-    //         $object->getActivateSheet()->setCellValue('B'. $baris, $kelas->nama_kelas);
-
-    //         $baris++;
-    //     }
-
-    //     $filename = "Data_Kelas". '.xlsx';
-
-    //     $object->getActiveSheet()->setTitle("Data Kelas");
-
-    //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    //     header('Content-Disposition: attachment; filename="'.$filename.'"');
-    //     header('Cache-Control: max-age=0');
-
-    //     $writer=PHPExcel_IOFactory::createwriter($object, 'Excel2007');
-    //     $writer->save('php://output');
-
-    //     exit;
-    // }
+    public function download_template()
+    {
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Template Import Data Kelas - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'Kelas');
+        $activeWorksheet->setCellValue('B1', 'Kompetensi Keahlian');
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
+    }
 
 	public function import()
     {
-        if(isset($_FILES["file"]["name"])){
-                // upload
-            $file_tmp = $_FILES['file']['tmp_name'];
-            $file_name = $_FILES['file']['name'];
-            $file_size =$_FILES['file']['size'];
-            $file_type=$_FILES['file']['type'];
-            // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
-            
-            $object = PHPExcel_IOFactory::load($file_tmp);
-    
-            foreach($object->getWorksheetIterator() as $worksheet){
-    
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
-    
-                for($row=4; $row<=$highestRow;  $row++){
-    
-                    $nis = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                    $nama_siswa = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                    $kelas = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $jenis_kelamin = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-
-                    $data[] = array(
-                        'nis'          => $nis,
-                        'nama_siswa'          =>$nama_siswa,
-                        'kelas'         =>$kelas,
-                        'jenis_kelamin'         =>$jenis_kelamin
-                    );
-    
-                } 
-    
-            }
-
-    
-            $this->db->insert_batch('siswa', $data);
-    
-            $message = array(
-                'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
-            );
-            
-            $this->session->set_flashdata($message);
-            redirect($_SERVER['HTTP_REFERER']);
-        }
-        else
+        $upload_file = $_FILES['file']['name'];
+        $extension = pathinfo($upload_file, PATHINFO_EXTENSION);
+        if($extension == 'csv')
         {
-                $message = array(
-                'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
-            );
-            
-            $this->session->set_flashdata($message);
-            redirect($_SERVER['HTTP_REFERER']);
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        }else if($extension == 'xls')
+        {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        }else
+        {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         }
+        $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+        $sheetdata = $spreadsheet->getActiveSheet()->toArray();
+        $sheetcount = count($sheetdata);
+        if($sheetcount > 1)
+        {
+            $data = array();
+            for ($i = 1; $i < $sheetcount; $i++){
+                $kelas = $sheetdata[$i][0];
+                $kompetensi_keahlian = $sheetdata[$i][1];
+                $data[] = array(
+                    'kelas' => $kelas,
+                    'kompetensi_keahlian' => $kompetensi_keahlian,
+                );
+            }
+            $insertdata = $this->M_Kelas->insertDataKelasImport($data);
+            if($insertdata)
+            {
+                $message = array(
+                    'pesan'=>'<div class="alert alert-success">Impor data kelas telah berhasil!</div>',
+                );
+                
+                $this->session->set_flashdata($message);
+                redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $message = array(
+                    'pesan'=>'<div class="alert alert-danger">Impor data kelas gagal, silahkan coba lagi!</div>',
+                );
+                
+                $this->session->set_flashdata($message);
+                redirect($_SERVER['HTTP_REFERER']);   
+            }
+        }
+    }
+
+    public function export()
+    {
+        $data_kelas = $this->M_Kelas->getDataKelas();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Data Kelas - Bank Mini.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'No');
+        $activeWorksheet->setCellValue('B1', 'Kelas');
+        $activeWorksheet->setCellValue('C1', 'Kompetensi Keahlian');
+
+        $no = 1;
+        $sn = 2;
+
+        foreach($data_kelas as $data_kelas){
+            $activeWorksheet->setCellValue('A'. $sn, $no++);
+            $activeWorksheet->setCellValue('B'. $sn, $data_kelas->kelas);
+            $activeWorksheet->setCellValue('C'. $sn, $data_kelas->kompetensi_keahlian);
+            $sn++;
+        }
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("php://output");
     }
 }

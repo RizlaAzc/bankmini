@@ -5,21 +5,21 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Siswa</h4>
+                  <h4 class="card-title">Data Siswa</h4>
                   <p class="card-description">
                     <div class="row mb-2">
-                      <div class="col-lg-3">
+                      <div class="col-lg-9">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Tambah Siswa
-                        </button>
-                        <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
-                          Impor Excel
-                        </button>
+                      </button>
+                      <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                        Impor Excel
+                      </button>
+                      <label class="badge badge-success" style="margin-left: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a></label>
                       </div>
-                      <div class="col-lg-6 text-center">
-                        <label class="badge badge-success" style="margin-right: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a></label>
+                      <!-- <div class="col-lg-6 text-center">
                         <label class="badge badge-warning"><a class="text-warning" style="text-decoration: none;" target="_blank" href="<?= base_url('pdf_siswa') ?>">Ekspor PDF</a></label>
-                      </div>
+                      </div> -->
                       <div class="col-lg-3">
                         <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
                       </div>
@@ -34,7 +34,7 @@
                     <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive" style="overflow-y: auto; height: 360px;">
+                  <div class="table-responsive" style="overflow-y: auto; max-height: 360px;">
                     <table id="searchTable" class="table table-hover">
                       <thead>
                         <tr class="header">
@@ -72,18 +72,16 @@
         </div>
         <!-- content-wrapper ends -->
 
-        <!-- Button trigger modal -->
-
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog" style="transform: translate(0, -50%); top: 50%; margin: 0 auto;">
+          <div class="modal-dialog" style="transform: translate(0, -53%); top: 50%; margin: 0 auto;">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Tambah Siswa</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="<?= base_url('tambah_siswa') ?>" method="post">
-              <div class="modal-body" style="height: 450px; overflow-y: auto;">
+              <div class="modal-body" style="height: 400px; overflow-y: auto;">
                     <div class="form-group">
                         <label for="inputAddress" class="form-label">NIS</label>
                         <input type="text" class="form-control" id="inputAddress" name="nis" placeholder="NIS" required>
@@ -129,20 +127,37 @@
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdropimpor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog" style="transform: translate(0, -53%); top: 50%; margin: 0 auto;">
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Impor Data Siswa</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="<?= base_url('import_siswa') ?>" method="post" enctype="multipart/form-data">
-                <div class="modal-body">
+                <div class="modal-body" style="height: 400px; overflow-y: auto;">
                   <div class="form-group">
                       <label for="inputAddress" class="form-label">Upload File</label>
                       <input type="file" class="form-control" id="inputAddress" name="file" accept=".xls, .xlsx" required>
                       <div class="mt-1">
-                        <label for="inputAddress" class="form-label">File yang di upload harus berformat : .xls dan .xlsx</label>
-                            <!-- <span class="text-secondary">File yang harus diupload : .xls, xlsx</span> -->
+                        <label for="inputAddress" class="form-label">File yang di upload harus berformat : .xls dan .xlsx
+                          <br>
+                          <br>
+                          Download template Excel di sini : <a href="<?= base_url('download_template_siswa') ?>">Download Template</a>
+                          <br>
+                          <br>
+                          <b>Catatan Penting !</b>
+                          <br>
+                          Untuk pengisian :
+                          <br>
+                          - Kolom <b>Jenis Kelamin</b>, harap diisi dengan huruf L/P saja.
+                          <br>
+                          - Kolom <b>Kelas</b>, harap diisi dengan Angka Romawi(X) dan singkatan Kejuruannya(PPLG).
+                          <br>
+                          <br>
+                          Seperti gambar berikut.
+                          <br>
+                          <img style="width: 350px;" src="<?= base_url('assets/images/Contoh Template.png') ?>" alt="Contoh Template.png">
+                        </label>
                         </div>
                         <?= form_error('file','<div class="text-danger">','</div>') ?>
                   </div>

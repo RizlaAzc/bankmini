@@ -5,13 +5,49 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Tabungan Harian</h4>
+                  <input class="form-control" type="text" id="searchInput" style="width: 225px; float: right;" onkeyup="searchFunction()" placeholder="Cari...">
+                  <h4 class="card-title">Data Tabungan Harian</h4>
+                  <p class="card-description">
+                    <label class="badge badge-success" style="position: absolute;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_tabungan_harian') ?>">Ekspor Excel</a></label>
+                    <?php
+                      if($saldo_harian_masuk_hari_ini['saldo_harian_masuk_hari_ini'] != null){
+                    ?>
+                    <span class="text-success" style="float: right;">Total saldo harian masuk hari ini : Rp<?= $saldo_harian_masuk_hari_ini['saldo_harian_masuk_hari_ini'] ?></span>
+                    <?php
+                     }else{
+                    ?>
+                       <span class="text-success" style="float: right;">Total saldo harian masuk hari ini : - </span>
+                    <?php
+                     }
+                    ?>
+                    <br>
+                    <?php
+                      if($saldo_harian_keluar_hari_ini['saldo_harian_keluar_hari_ini'] != null){
+                    ?>
+                    <span class="text-danger" style="float: right;">Total saldo harian keluar hari ini : Rp<?= $saldo_harian_keluar_hari_ini['saldo_harian_keluar_hari_ini'] ?></span>
+                    <?php
+                      }else{
+                    ?>
+                        <span class="text-danger" style="float: right;">Total saldo harian keluar hari ini : - </span>
+                    <?php
+                      }
+                    ?>
+                    <br>
+                    <?php
+                    if($saldo_saat_ini['saldo_harian'] != null){
+                    ?>
+                    <span class="" style="float: right;">Total saldo tabungan harian berjumlah : Rp<?= $saldo_saat_ini['saldo_harian'] ?></span>
+                    <?php
+                    }else{
+                    ?>
+                      <span class="" style="float: right;">Total saldo tabungan harian berjumlah : Rp0 </span>
+                    <?php
+                    }
+                    ?>
                   <div class="row">
                     <div class="col-lg-9">
-                      <p class="card-description">Total saldo tabungan harian berjumlah : <?= $saldo_saat_ini['saldo_harian'] ?>
                     </div>
                     <div class="col-lg-3">
-                      <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
                     </div>
                   </div>
                     <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -30,7 +66,7 @@
                     <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive" style="overflow-y: auto; height: 360px;">
+                  <div class="table-responsive" style="overflow-y: auto; max-height: 360px;">
                     <table id="searchTable" class="table table-hover">
                       <thead>
                         <tr class="header">

@@ -5,7 +5,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Kelas</h4>
+                  <h4 class="card-title">Data Kelas</h4>
                   <p class="card-description">
                     <div class="row mb-2">
                       <div class="col-lg-9">
@@ -14,7 +14,11 @@
                         </button>
                         <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                         Impor Excel
-                        </button>
+                      </button>
+                        <label class="badge badge-success" style="margin-left: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_kelas') ?>">Ekspor Excel</a></label>
+                        <!-- <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                        Impor Excel
+                        </button> -->
                       </div>
                       <div class="col-lg-3">
                         <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
@@ -30,7 +34,7 @@
                     <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
                     <?= $this->session->flashdata('pesan'); ?>
                   </p>
-                  <div class="table-responsive" style="overflow-y: auto; height: 360px;">
+                  <div class="table-responsive" style="overflow-y: auto; max-height: 360px;">
                     <table id="searchTable" class="table table-hover">
                       <thead>
                         <tr class="header">
@@ -63,8 +67,6 @@
           </div>
         </div>
         <!-- content-wrapper ends -->
-
-        <!-- Button trigger modal -->
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -100,6 +102,52 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdropimpor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog" style="transform: translate(0, -53%); top: 50%; margin: 0 auto;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Impor Data Kelas</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="<?= base_url('import_kelas') ?>" method="post" enctype="multipart/form-data">
+                <div class="modal-body" style="height: 400px; overflow-y: auto;">
+                  <div class="form-group">
+                      <label for="inputAddress" class="form-label">Upload File</label>
+                      <input type="file" class="form-control" id="inputAddress" name="file" accept=".xls, .xlsx" required>
+                      <div class="mt-1">
+                        <label for="inputAddress" class="form-label">File yang di upload harus berformat : .xls dan .xlsx
+                          <br>
+                          <br>
+                          Download template Excel di sini : <a href="<?= base_url('download_template_kelas') ?>">Download Template</a>
+                          <br>
+                          <br>
+                          <b>Catatan Penting !</b>
+                          <br>
+                          Untuk pengisian :
+                          <br>
+                          - Kolom <b>Kelas</b>, harap diisi dengan Angka Romawi(X).
+                          <br>
+                          - Kolom <b>Kompetensi Keahlian</b>, harap diisi dengan singkatan Kejuruannya(PPLG).
+                          <br>
+                          <br>
+                          Seperti gambar berikut.
+                          <br>
+                          <img style="width: 260px;" src="<?= base_url('assets/images/Contoh Template 1.png') ?>" alt="Contoh Template 1.png">
+                        </label>
+                        </div>
+                        <?= form_error('file','<div class="text-danger">','</div>') ?>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" name="import" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

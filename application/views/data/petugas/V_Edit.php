@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary me-2">Submit</button>
-                    <a href="<?= base_url('petugas') ?>" class="btn btn-light">Cancel</a>
+                    <a href="<?= base_url('petugas') ?>" class="btn btn-light">Batal</a>
                   </form>
                 </div>
               </div>

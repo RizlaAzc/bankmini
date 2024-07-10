@@ -5,49 +5,76 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tabel Transaksi</h4>
-                  <p class="card-description">
-                    Total saldo keseluruhan berjumlah : <?= $saldo_saat_ini['saldo'] ?>
-                    <div class="row mb-2">
-                      <div class="col-lg-2">
-                        <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                          Lakukan Transaksi
-                        </button>
-                      </div>
-                      <div class="col-lg-7">
-                        <div class="row">
-                          <div class="col-lg-3">
-                            <label class="form-label" style="float: right; padding: 5px;" for=""><p>Pilih Tanggal :</p></label>
-                          </div>
-                          <div class="col-lg-9">
-                            <input class="form-control mx-auto" style="width: 250px; float: left; cursor: pointer;" type="text" name="daterange" value="" readonly/>
-                            <label class="badge badge-dark" style="margin-left: 10px; padding: 9px;"><a class="text-dark" style="text-decoration: none;" href="<?= base_url('transaksi') ?>">Reset</a></label>
-                            <label class="badge badge-warning" style="padding: 9px;"><a class="text-warning" style="text-decoration: none;" target="_blank" href="<?= base_url('pdf_transaksi') ?>">PDF</a></label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">
-                      </div>
+                  <div class="row" style="padding-bottom: 45px;">
+                    <div class="col-lg-8">
+                      
+                      <h4 class="card-title">Data Transaksi</h4>
+                      <label class="form-label" style="float: left; padding: 5px;" for=""><p>Tampilkan berdasarkan tanggal :</p></label>
+                      <input class="form-control mx-auto" style="top: 30px; left: -202px; position: relative; width: 215px; float: left; cursor: pointer;" type="text" name="daterange" value="" readonly/>
+                      <label class="badge badge-dark" style="top: 18px; left: -202px; position: relative; margin-left: 10px; padding: 9px;"><a class="text-dark" style="text-decoration: none;" href="<?= base_url('transaksi') ?>">Reset</a></label>
+                      <button type="button" class="badge badge-primary text-primary" style="margin-top: 15px; top: 60px; left: -482px; position: relative;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Tambah Transaksi
+                      </button>
+                      <label class="badge badge-success" style="padding: 6px; top: 31px; left: -72px; position: relative;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_transaksi') ?>">Ekspor Excel</a></label>
                     </div>
-                  <!-- <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
-                  Impor Excel
-                  </button> -->
-                    <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">
-                    Ekspor Excel
-                    </button>
-                    <ul class="dropdown-menu" id="dropdown">
-                            <li><a class="dropdown-item" href="<?= base_url('portofolio/excel') ?>">Excel</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('portofolio/pdf') ?>">Pdf</a></li>
-                        </ul> -->
-                    <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
-                    <?= $this->session->flashdata('pesan'); ?>
-                  </p>
-                  <div class="table-responsive" style="overflow-y: auto; height: 300px;">
+                    <div class="col-lg-4">
+                      
+                      <input class="form-control" type="text" id="searchInput" style="width: 225px; float: right;" onkeyup="searchFunction()" placeholder="Cari...">
+                      <p class="card-description" style="margin-top: 45px;">
+                      <?php
+                      if($saldo_masuk_hari_ini['saldo_masuk_hari_ini'] != null){
+                      ?>
+                        <span class="text-success" style="float: right;">Total saldo masuk hari ini : Rp<?= $saldo_masuk_hari_ini['saldo_masuk_hari_ini'] ?></span>
+                      <?php
+                      }else{
+                        ?>
+                        <span class="text-success" style="float: right;">Total saldo masuk hari ini : - </span>
+                      <?php
+                      }
+                      ?>
+                        <br>
+                      <?php
+                      if($saldo_keluar_hari_ini['saldo_keluar_hari_ini'] != null){
+                      ?>
+                        <span class="text-danger" style="float: right;">Total saldo keluar hari ini : Rp<?= $saldo_keluar_hari_ini['saldo_keluar_hari_ini'] ?></span>
+                      <?php
+                      }else{
+                      ?>
+                        <span class="text-danger" style="float: right;">Total saldo keluar hari ini : - </span>
+                      <?php
+                      }
+                      ?>
+                        <br>
+                        <?php
+                        if($saldo_saat_ini['saldo'] != null){
+                        ?>
+                        <span class="" style="float: right;">Total saldo keseluruhan berjumlah : Rp<?= $saldo_saat_ini['saldo'] ?></span>
+                        <?php
+                        }else{
+                        ?>
+                          <span class="" style="float: right;">Total saldo keseluruhan berjumlah : Rp0</span>
+                        <?php
+                        }
+                        ?>
+                      </div>
+                      <!-- <button type="button" class="badge badge-danger text-danger" style="float: right; margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
+                        Impor Excel
+                      </button> -->
+                      <!-- <button type="button" class="badge badge-success text-success dropdown-toggle" style="float: right;" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false">
+                        Ekspor Excel
+                      </button>
+                      <ul class="dropdown-menu" id="dropdown">
+                        <li><a class="dropdown-item" href="<?= base_url('portofolio/excel') ?>">Excel</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('portofolio/pdf') ?>">Pdf</a></li>
+                      </ul> -->
+                      <!-- <a class="badge badge-success text-success" style="float: right;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a> -->
+                    </div>
+                      <?= $this->session->flashdata('pesan'); ?>
+                    </p>
+                    <div class="table-responsive" style="overflow-y: auto; max-height: 300px;">
                     <table id="searchTable" class="table">
                       <thead>
                         <tr class="header">
-                          <!-- <th class="text-center" style="width: 60px;">No</th> -->
                           <th>Tanggal</th>
                           <th>No. Transaksi</th>
                           <th>Nama Siswa</th>
@@ -55,7 +82,6 @@
                           <th>Debit</th>
                           <th>Kredit</th>
                           <th>Saldo</th>
-                          <!-- <th style="width: 140px;">Aksi</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -79,10 +105,9 @@
                           <td><?= $transaksi->id_transaksi ?></td>
                           <td><?= $transaksi->nama_siswa ?></td>
                           <td><?= $transaksi->jenis_tabungan ?></td>
-                          <td><?= $transaksi->debit ?></td>
-                          <td><?= $transaksi->kredit ?></td>
-                          <td><?= $transaksi->saldo ?></td>
-                          <!-- <td><label class="badge badge-info" style="margin-right: 3px;"><a class="text-info" style="text-decoration: none;" href="<?= base_url('edit_kelas/' . $transaksi->id_kelas) ?>">Edit</a></label><label class="badge badge-danger" style="margin-left: 3px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('fungsi_hapus_kelas/' . $transaksi->id_kelas) ?>">Hapus</a></label></td> -->
+                          <td>Rp<?= $transaksi->debit ?></td>
+                          <td>Rp<?= $transaksi->kredit ?></td>
+                          <td>Rp<?= $transaksi->saldo ?></td>
                         </tr>
                         <?php
                         }
@@ -96,8 +121,6 @@
           </div>
         </div>
         <!-- content-wrapper ends -->
-
-        <!-- Button trigger modal -->
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -128,7 +151,7 @@
                   <div class="col-lg-7">
                     <div class="form-group">
                       <label for="inputAddress2" class="form-label">Nominal (IDR)</label>
-                      <input class="form-control" type="text" name="nominal" id="nominal" placeholder="Nominal (IDR)" required>
+                      <input class="form-control" type="text" name="nominal" id="nominal" placeholder="Contoh : 100000" required>
                       <?php
                       if($check_saldo == null){
                       ?>
@@ -165,8 +188,8 @@
                 <label for="inputAddress2" class="form-label">Pilih Transaksi :</label>
                 <select class="form-control" style="width: 200px; margin-right: 227px;" name="jenis_transaksi" id="jenis_transaksi">
                   <option class="form-control" selected="true" disabled="disabled">Belum dipilih</option>
-                  <option class="form-control" value="debit">Debit</option>
-                  <option class="form-control" value="kredit">Kredit</option>
+                  <option class="form-control" value="debit">Setor Tunai</option>
+                  <option class="form-control" value="kredit">Tarik Tunai</option>
                 </select>
                 </div>
                 <div class="form-group" style="margin-top: 30px;">
