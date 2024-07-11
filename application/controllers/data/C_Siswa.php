@@ -213,4 +213,10 @@ class C_Siswa extends CI_Controller {
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
+
+    public function print()
+    {
+        $data['siswa'] = $this->M_Siswa->getDataSiswa();
+        $this->load->view('data/siswa/V_Print', $data);
+    }
 }

@@ -133,4 +133,10 @@ class C_Petugas extends CI_Controller {
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
+
+	public function print()
+    {
+        $data['petugas'] = $this->M_Petugas->getDataPetugas();
+        $this->load->view('data/petugas/V_Print', $data);
+    }
 }

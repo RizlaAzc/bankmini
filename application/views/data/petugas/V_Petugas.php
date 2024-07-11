@@ -12,7 +12,14 @@
                         <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> -->
                         <!-- Tambah Kelas
                         </button> -->
-                        <label class="badge badge-success" style=""><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_petugas') ?>">Ekspor Excel</a></label>
+                        <!-- <label class="badge badge-success" style=""><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_petugas') ?>">Ekspor Excel</a></label> -->
+                        <div class="dropdown">
+                              <label class="badge badge-success dropdown-toggle" style="margin-left: 5px; cursor: pointer;" id="dropdownEksporPetugas" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><a class="text-success" style="text-decoration: none; cursor: pointer;">Ekspor</a></label>
+                              <div class="dropdown-menu" aria-labelledby="dropdownEksporPetugas">
+                                <a class="dropdown-item" href="<?= base_url('export_petugas') ?>">Excel</a>
+                                <a class="dropdown-item" href="<?= base_url('print_petugas') ?>">Print</a>
+                              </div>
+                            </div>
                         <!-- <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                         Impor Excel
                         </button> -->

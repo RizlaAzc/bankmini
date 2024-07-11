@@ -11,6 +11,7 @@
                   <div class="row">
                     <div class="col-lg-9">
                     <label class="badge badge-success" style="margin-left: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_mutasi_tahunan/' . $siswa->nis ) ?>">Ekspor Excel</a></label>
+                    <label class="badge badge-danger" style="position: absolute; left: 125px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('print_mutasi_tahunan/' . $siswa->nis) ?>">Print</a></label>
                     </div>
                     <div class="col-lg-3">
                       <input class="form-control" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Cari...">

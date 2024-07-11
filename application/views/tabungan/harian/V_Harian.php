@@ -9,6 +9,7 @@
                   <h4 class="card-title">Data Tabungan Harian</h4>
                   <p class="card-description">
                     <label class="badge badge-success" style="position: absolute;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_tabungan_harian') ?>">Ekspor Excel</a></label>
+                    <label class="badge badge-danger" style="position: absolute; left: 120px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('print_tabungan_harian') ?>">Print</a></label>
                     <?php
                       if($saldo_harian_masuk_hari_ini['saldo_harian_masuk_hari_ini'] != null){
                     ?>

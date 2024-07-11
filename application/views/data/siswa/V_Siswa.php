@@ -9,13 +9,28 @@
                   <p class="card-description">
                     <div class="row mb-2">
                       <div class="col-lg-9">
+                      <div class="row">
+                      <div style="flex: 0 0 auto; width: 13.22222%;">
                         <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Tambah Siswa
-                      </button>
+                        </button>
+                      </div>
+                      <div style="flex: 0 0 auto; width: 11.88888%;">
                       <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">
                         Impor Excel
                       </button>
-                      <label class="badge badge-success" style="margin-left: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a></label>
+                    </div>
+                    <!-- <label class="badge badge-success" style="margin-left: 5px;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_siswa') ?>">Ekspor Excel</a></label> -->
+                    <div style="flex: 0 0 auto; width: 11.88888%;">
+                    <div class="dropdown">
+                              <label class="badge badge-success dropdown-toggle" style="margin-left: 5px; cursor: pointer;" id="dropdownEksporSiswa" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><a class="text-success" style="text-decoration: none; cursor: pointer;">Ekspor</a></label>
+                              <div class="dropdown-menu" aria-labelledby="dropdownEksporSiswa">
+                                <a class="dropdown-item" href="<?= base_url('export_siswa') ?>">Excel</a>
+                                <a class="dropdown-item" href="<?= base_url('print_siswa') ?>">Print</a>
+                              </div>
+                            </div>
+                    </div>
+                    </div>
                       </div>
                       <!-- <div class="col-lg-6 text-center">
                         <label class="badge badge-warning"><a class="text-warning" style="text-decoration: none;" target="_blank" href="<?= base_url('pdf_siswa') ?>">Ekspor PDF</a></label>

@@ -313,6 +313,20 @@ class C_Transaksi extends CI_Controller {
         $writer->save("php://output");
     }
 
+    public function print()
+    {   
+        $if_start = $this->session->flashdata('if_start');
+        $if_end = $this->session->flashdata('if_end');
+        
+        if (isset($if_start)) {
+            $data['transaksi'] = $this->M_Transaksi->getDataTransaksifiltered($if_start, $if_end);
+        } else {
+            $data['transaksi'] = $this->M_Transaksi->getDataTransaksi();
+        }
+
+        $this->load->view('V_Print', $data);
+    }
+
     // public function pdf()
     // {
     //     $if_start = $this->session->flashdata('if_start');

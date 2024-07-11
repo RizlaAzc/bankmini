@@ -15,7 +15,8 @@
                       <button type="button" class="badge badge-primary text-primary" style="margin-top: 15px; top: 60px; left: -482px; position: relative;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Tambah Transaksi
                       </button>
-                      <label class="badge badge-success" style="padding: 6px; top: 31px; left: -72px; position: relative;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_transaksi') ?>">Ekspor Excel</a></label>
+                      <label class="badge badge-success" style="padding: 6px; top: 31px; left: -75px; position: relative;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_transaksi') ?>">Ekspor Excel</a></label>
+                      <label class="badge badge-danger" style="padding: 6px; top: 31px; left: -70px; position: relative;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('print_transaksi') ?>">Print</a></label>
                     </div>
                     <div class="col-lg-4">
                       

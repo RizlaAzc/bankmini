@@ -148,4 +148,16 @@ class C_Harian extends CI_Controller {
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
+
+    public function print()
+    {   
+        $data['harian'] = $this->M_Transaksi->getDataTransaksiHarian();
+        $this->load->view('tabungan/harian/V_Print', $data);
+    }
+
+    public function print_mutasi($id)
+    {   
+        $data['mutasi_harian'] = $this->M_Transaksi->getDataTransaksiHarianDetail($id);
+        $this->load->view('tabungan/harian/V_PrintMutasi', $data);
+    }
 }

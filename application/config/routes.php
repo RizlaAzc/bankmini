@@ -63,17 +63,22 @@ $route['logout'] = 'C_Auth/logout';
 $route['transaksi'] = 'C_Transaksi';
 $route['lakukan_transaksi'] = 'C_Transaksi/transaksi';
 $route['export_transaksi'] = 'C_Transaksi/export';
+$route['print_transaksi'] = 'C_Transaksi/print';
 
 // Route Tabungan
 $route['tabungan_harian'] = 'tabungan/C_Harian';
 $route['export_tabungan_harian'] = 'tabungan/C_Harian/export';
 $route['mutasi_harian/(:any)'] = 'tabungan/C_Harian/mutasi/$1';
 $route['export_mutasi_harian/(:any)'] = 'tabungan/C_Harian/export_mutasi/$1';
+$route['print_tabungan_harian'] = 'tabungan/C_Harian/print';
+$route['print_mutasi_harian/(:any)'] = 'tabungan/C_Harian/print_mutasi/$1';
 
 $route['tabungan_tahunan'] = 'tabungan/C_Tahunan';
 $route['export_tabungan_tahunan'] = 'tabungan/C_Tahunan/export';
 $route['mutasi_tahunan/(:any)'] = 'tabungan/C_Tahunan/mutasi/$1';
 $route['export_mutasi_tahunan/(:any)'] = 'tabungan/C_Tahunan/export_mutasi/$1';
+$route['print_tabungan_tahunan'] = 'tabungan/C_Tahunan/print';
+$route['print_mutasi_tahunan/(:any)'] = 'tabungan/C_Tahunan/print_mutasi/$1';
 
 // Route Data
 $route['kelas'] = 'data/C_kelas';
@@ -84,6 +89,7 @@ $route['fungsi_hapus_kelas/(:any)'] = 'data/C_Kelas/fungsi_hapus/$1';
 $route['download_template_kelas'] = 'data/C_Kelas/download_template';
 $route['export_kelas'] = 'data/C_Kelas/export';
 $route['import_kelas'] = 'data/C_Kelas/import';
+$route['print_kelas'] = 'data/C_Kelas/print';
 
 $route['petugas'] = 'data/C_petugas';
 $route['level_admin/(:any)'] = 'data/C_Petugas/admin_level_user/$1';
@@ -92,6 +98,7 @@ $route['active_status/(:any)'] = 'data/C_Petugas/active_status_user/$1';
 $route['deactive_status/(:any)'] = 'data/C_Petugas/deactive_status_user/$1';
 $route['fungsi_hapus_petugas/(:any)'] = 'data/C_Petugas/fungsi_hapus/$1';
 $route['export_petugas'] = 'data/C_Petugas/export';
+$route['print_petugas'] = 'data/C_Petugas/print';
 
 $route['siswa'] = 'data/C_siswa';
 $route['tambah_siswa'] = 'data/C_Siswa/fungsi_tambah';
@@ -101,3 +108,4 @@ $route['fungsi_hapus_siswa/(:any)'] = 'data/C_Siswa/fungsi_hapus/$1';
 $route['download_template_siswa'] = 'data/C_Siswa/download_template';
 $route['export_siswa'] = 'data/C_Siswa/export';
 $route['import_siswa'] = 'data/C_Siswa/import';
+$route['print_siswa'] = 'data/C_Siswa/print';

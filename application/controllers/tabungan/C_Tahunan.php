@@ -149,4 +149,16 @@ class C_Tahunan extends CI_Controller {
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
+
+    public function print()
+    {   
+        $data['tahunan'] = $this->M_Transaksi->getDataTransaksiTahunan();
+        $this->load->view('tabungan/tahunan/V_Print', $data);
+    }
+
+    public function print_mutasi($id)
+    {   
+        $data['mutasi_tahunan'] = $this->M_Transaksi->getDataTransaksiTahunanDetail($id);
+        $this->load->view('tabungan/tahunan/V_PrintMutasi', $data);
+    }
 }

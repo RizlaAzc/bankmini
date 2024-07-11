@@ -191,4 +191,10 @@ class C_Kelas extends CI_Controller {
         $writer = new Xlsx($spreadsheet);
         $writer->save("php://output");
     }
+
+    public function print()
+    {
+        $data['kelas'] = $this->M_Kelas->getDataKelas();
+        $this->load->view('data/kelas/V_Print', $data);
+    }
 }
