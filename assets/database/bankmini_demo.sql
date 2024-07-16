@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Jul 2024 pada 08.02
+-- Waktu pembuatan: 13 Jul 2024 pada 06.04
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -33,6 +33,15 @@ CREATE TABLE `kelas` (
   `kompetensi_keahlian` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `kelas`
+--
+
+INSERT INTO `kelas` (`id_kelas`, `kelas`, `kompetensi_keahlian`) VALUES
+(1, 'X', 'Contoh'),
+(2, 'XI', 'Contoh'),
+(3, 'XII', 'Contoh');
+
 -- --------------------------------------------------------
 
 --
@@ -55,7 +64,8 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id_petugas`, `username`, `password`, `nama_lengkap`, `email`, `level`, `status`, `waktu_dibuat`) VALUES
-(0, 'admin', '$2y$10$oDK6S5LHLMEeajxB2.jN4Od3thtCSQ3NolIkktst32qvdy.NwftK2', 'Admin', 'admin@gmail.com', 'Admin', 'Sudah Aktif', '2024-05-12 03:37:16');
+(0, 'admin', '$2y$10$oDK6S5LHLMEeajxB2.jN4Od3thtCSQ3NolIkktst32qvdy.NwftK2', 'Admin', 'admin@gmail.com', 'Admin', 'Sudah Aktif', '2024-05-12 03:37:16'),
+(1, 'petugas1', '$2y$10$Bc1R0Xy6R2YAieUddFb1pO01he00V3XuBlOy3wJXEWiX1FskvdBly', 'Petugas 1', 'petugas1@gmail.com', 'Petugas', 'Tidak Aktif', '2024-07-13 03:40:27');
 
 -- --------------------------------------------------------
 
@@ -82,7 +92,9 @@ CREATE TABLE `riwayat_transaksi` (
 --
 
 INSERT INTO `riwayat_transaksi` (`id_transaksi`, `tanggal`, `jenis_tabungan`, `keterangan`, `debit`, `kredit`, `saldo`, `saldo_harian`, `saldo_tahunan`, `nis`, `id_petugas`) VALUES
-(0, '2024-07-01', 'Tabungan Harian', 'Tes Input', '0', '0', '0', '0', '0', '000000000', 0);
+(0, '2024-07-01', 'Tabungan Tahunan', 'Tes Input', '0', '0', '0', '0', '0', '000000002', 0),
+(1, '2024-07-11', 'Tabungan Harian', 'Tes Transaksi', '10000', '0', '10000', '10000', '0', '000000001', 0),
+(2, '2024-07-13', 'Tabungan Harian', 'Tes Transaksi', '0', '5000', '5000', '5000', '0', '000000001', 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +114,8 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `nama_siswa`, `jenis_kelamin`, `kelas`) VALUES
-('000000000', 'Sample', 'L', 'X Contoh');
+('000000001', 'Sample Nama 1', 'L', 'XI Contoh'),
+('000000002', 'Sample Nama 2', 'P', 'XI Contoh');
 
 --
 -- Indexes for dumped tables
@@ -154,7 +167,7 @@ ALTER TABLE `petugas`
 -- AUTO_INCREMENT untuk tabel `riwayat_transaksi`
 --
 ALTER TABLE `riwayat_transaksi`
-  MODIFY `id_transaksi` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_transaksi` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

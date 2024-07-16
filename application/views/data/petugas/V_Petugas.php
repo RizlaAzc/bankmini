@@ -7,7 +7,7 @@
                 <div class="card-body">
                       <h4 class="card-title">Data Petugas</h4>
                   <p class="card-description">
-                    <div class="row">
+                    <div class="row mb-2">
                     <div class="col-lg-9">
                         <!-- <button type="button" class="badge badge-primary text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> -->
                         <!-- Tambah Kelas
@@ -17,7 +17,7 @@
                               <label class="badge badge-success dropdown-toggle" style="margin-left: 5px; cursor: pointer;" id="dropdownEksporPetugas" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><a class="text-success" style="text-decoration: none; cursor: pointer;">Ekspor</a></label>
                               <div class="dropdown-menu" aria-labelledby="dropdownEksporPetugas">
                                 <a class="dropdown-item" href="<?= base_url('export_petugas') ?>">Excel</a>
-                                <a class="dropdown-item" href="<?= base_url('print_petugas') ?>">Print</a>
+                                <a class="dropdown-item" target="_blank" href="<?= base_url('print_petugas') ?>">Print</a>
                               </div>
                             </div>
                         <!-- <button type="button" class="badge badge-danger text-danger" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdropimpor">

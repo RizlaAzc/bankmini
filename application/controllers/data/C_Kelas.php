@@ -66,14 +66,25 @@ class C_Kelas extends CI_Controller {
         $kelas = $this->input->post('kelas');
         $kompetensi_keahlian = $this->input->post('kompetensi_keahlian');
 
-        $ArrInsert = array(
-            'kelas' => $kelas,
-            'kompetensi_keahlian' => $kompetensi_keahlian
-        );
+        $check = $this->db->query("SELECT id_kelas FROM kelas WHERE kelas = '$kelas' AND kompetensi_keahlian = '$kompetensi_keahlian'")->result();
+        
+        if($check == null){
 
-        $this->M_Kelas->insertDataKelas($ArrInsert);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
-		redirect($_SERVER['HTTP_REFERER']);
+            $ArrInsert = array(
+                'kelas' => $kelas,
+                'kompetensi_keahlian' => $kompetensi_keahlian
+            );
+    
+            $this->M_Kelas->insertDataKelas($ArrInsert);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
+            redirect($_SERVER['HTTP_REFERER']);
+
+        }else{
+
+            $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Data sudah terdaftar.</div>');
+            redirect($_SERVER['HTTP_REFERER']);
+
+        }
     }
 
 	public function fungsi_edit()
@@ -146,22 +157,34 @@ class C_Kelas extends CI_Controller {
                     'kompetensi_keahlian' => $kompetensi_keahlian,
                 );
             }
-            $insertdata = $this->M_Kelas->insertDataKelasImport($data);
-            if($insertdata)
-            {
-                $message = array(
-                    'pesan'=>'<div class="alert alert-success">Impor data kelas telah berhasil!</div>',
-                );
-                
-                $this->session->set_flashdata($message);
-                redirect($_SERVER['HTTP_REFERER']);
+            
+            $check = $this->db->query("SELECT id_kelas FROM kelas WHERE kelas = '$kelas' AND kompetensi_keahlian = '$kompetensi_keahlian'")->result();
+        
+            if($check == null){
+
+                $insertdata = $this->M_Kelas->insertDataKelasImport($data);
+                if($insertdata)
+                {
+                    $message = array(
+                        'pesan'=>'<div class="alert alert-success">Impor data kelas telah berhasil!</div>',
+                    );
+                    
+                    $this->session->set_flashdata($message);
+                    redirect($_SERVER['HTTP_REFERER']);
+                }else{
+                    $message = array(
+                        'pesan'=>'<div class="alert alert-danger">Impor data kelas gagal, silahkan coba lagi!</div>',
+                    );
+                    
+                    $this->session->set_flashdata($message);
+                    redirect($_SERVER['HTTP_REFERER']);   
+                }
+
             }else{
-                $message = array(
-                    'pesan'=>'<div class="alert alert-danger">Impor data kelas gagal, silahkan coba lagi!</div>',
-                );
-                
-                $this->session->set_flashdata($message);
-                redirect($_SERVER['HTTP_REFERER']);   
+
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Beberapa data sudah terdaftar.</div>');
+                redirect($_SERVER['HTTP_REFERER']);
+
             }
         }
     }

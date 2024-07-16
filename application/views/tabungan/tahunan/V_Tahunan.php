@@ -9,7 +9,7 @@
                   <h4 class="card-title">Data Tabungan Tahunan</h4>
                   <p class="card-description">
                     <label class="badge badge-success" style="position: absolute;"><a class="text-success" style="text-decoration: none;" href="<?= base_url('export_tabungan_tahunan') ?>">Ekspor Excel</a></label>
-                    <label class="badge badge-danger" style="position: absolute; left: 120px;"><a class="text-danger" style="text-decoration: none;" href="<?= base_url('print_tabungan_tahunan') ?>">Print</a></label>
+                    <label class="badge badge-danger" style="position: absolute; left: 120px;"><a class="text-danger" style="text-decoration: none;" target="_blank" href="<?= base_url('print_tabungan_tahunan') ?>">Print</a></label>
                   <?php
                     if($saldo_tahunan_masuk_hari_ini['saldo_tahunan_masuk_hari_ini'] != null){
                   ?>

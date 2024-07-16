@@ -138,11 +138,20 @@ class C_Transaksi extends CI_Controller {
                 $nis = $this->input->post('nis');
 
                 $check_saldo_harian = $this->db->query("SELECT saldo_harian FROM riwayat_transaksi WHERE nis = '$nis' ORDER BY id_transaksi DESC LIMIT 1")->result();
-                if($check_saldo_harian != null){
+                if($check_saldo_harian != null || $check_saldo_harian != 0){
                     foreach($check_saldo_harian as $row){
                         $c = $row->saldo_harian;
                     }
                     $saldo_harian = $c - $kredit;
+
+                    if($saldo_harian < 0){
+                        $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Tidak dapat melakukan penarikan, dikarenakan saldo nasabah tidak cukup.</div>');
+			            redirect($_SERVER['HTTP_REFERER']);
+                    }
+
+                }elseif($check_saldo_harian == null || $check_saldo_harian == 0){
+                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Tidak dapat melakukan penarikan, dikarenakan saldo nasabah tidak cukup.</div>');
+			        redirect($_SERVER['HTTP_REFERER']);
                 }
 
                 $check_saldo_tahunan = $this->db->query("SELECT saldo_tahunan FROM riwayat_transaksi WHERE nis = '$nis' ORDER BY id_transaksi DESC LIMIT 1")->result();
@@ -232,11 +241,19 @@ class C_Transaksi extends CI_Controller {
                 $nis = $this->input->post('nis');
 
                 $check_saldo_tahunan = $this->db->query("SELECT saldo_tahunan FROM riwayat_transaksi WHERE nis = '$nis' ORDER BY id_transaksi DESC LIMIT 1")->result();
-                if($check_saldo_tahunan != null){
+                if($check_saldo_tahunan != null || $check_saldo_tahunan != 0){
                     foreach($check_saldo_tahunan as $row){
                         $g = $row->saldo_tahunan;
                     }
                     $saldo_tahunan = $g - $kredit;
+
+                    if($saldo_tahunan < 0){
+                        $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Tidak dapat melakukan penarikan, dikarenakan saldo nasabah tidak cukup.</div>');
+			            redirect($_SERVER['HTTP_REFERER']);
+                    }
+                }elseif($check_saldo_tahunan == null || $check_saldo_tahunan == 0){
+                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Tidak dapat melakukan penarikan, dikarenakan saldo nasabah tidak cukup.</div>');
+			        redirect($_SERVER['HTTP_REFERER']);
                 }
 
                 $check_saldo_harian = $this->db->query("SELECT saldo_harian FROM riwayat_transaksi WHERE nis = '$nis' ORDER BY id_transaksi DESC LIMIT 1")->result();

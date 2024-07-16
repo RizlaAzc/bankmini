@@ -73,16 +73,27 @@ class C_Siswa extends CI_Controller {
         $jenis_kelamin = $this->input->post('jenis_kelamin');
         $kelas = $this->input->post('kelas');
 
-        $ArrInsert = array(
-            'nis' => $nis,
-            'nama_siswa' => $nama_siswa,
-            'jenis_kelamin' => $jenis_kelamin,
-            'kelas' => $kelas
-        );
+        $check = $this->db->query("SELECT nis FROM siswa WHERE nis = '$nis'")->result();
+        
+        if($check == null){
 
-        $this->M_Siswa->insertDataSiswa($ArrInsert);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
-		redirect($_SERVER['HTTP_REFERER']);
+            $ArrInsert = array(
+                'nis' => $nis,
+                'nama_siswa' => $nama_siswa,
+                'jenis_kelamin' => $jenis_kelamin,
+                'kelas' => $kelas
+            );
+
+            $this->M_Siswa->insertDataSiswa($ArrInsert);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
+            redirect($_SERVER['HTTP_REFERER']);
+
+        }else{
+
+            $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">NIS sudah terdaftar.</div>');
+            redirect($_SERVER['HTTP_REFERER']);
+
+        }
     }
 
 	public function fungsi_edit()
@@ -164,22 +175,34 @@ class C_Siswa extends CI_Controller {
                     'kelas' => $kelas,
                 );
             }
-            $insertdata = $this->M_Siswa->insertDataSiswaImport($data);
-            if($insertdata)
-            {
-                $message = array(
-                    'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
-                );
-                
-                $this->session->set_flashdata($message);
-                redirect($_SERVER['HTTP_REFERER']);
+
+            $check = $this->db->query("SELECT nis FROM siswa WHERE nis = '$nis'")->result();
+
+            if($check == null){
+
+                $insertdata = $this->M_Siswa->insertDataSiswaImport($data);
+                if($insertdata)
+                {
+                    $message = array(
+                        'pesan'=>'<div class="alert alert-success">Impor data siswa telah berhasil!</div>',
+                    );
+                    
+                    $this->session->set_flashdata($message);
+                    redirect($_SERVER['HTTP_REFERER']);
+                }else{
+                    $message = array(
+                        'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
+                    );
+                    
+                    $this->session->set_flashdata($message);
+                    redirect($_SERVER['HTTP_REFERER']);   
+                }
+
             }else{
-                $message = array(
-                    'pesan'=>'<div class="alert alert-danger">Impor data siswa gagal, silahkan coba lagi!</div>',
-                );
-                
-                $this->session->set_flashdata($message);
-                redirect($_SERVER['HTTP_REFERER']);   
+
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Beberapa NIS sudah terdaftar.</div>');
+                redirect($_SERVER['HTTP_REFERER']);
+
             }
         }
     }

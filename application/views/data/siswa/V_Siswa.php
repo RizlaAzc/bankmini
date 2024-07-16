@@ -26,7 +26,7 @@
                               <label class="badge badge-success dropdown-toggle" style="margin-left: 5px; cursor: pointer;" id="dropdownEksporSiswa" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><a class="text-success" style="text-decoration: none; cursor: pointer;">Ekspor</a></label>
                               <div class="dropdown-menu" aria-labelledby="dropdownEksporSiswa">
                                 <a class="dropdown-item" href="<?= base_url('export_siswa') ?>">Excel</a>
-                                <a class="dropdown-item" href="<?= base_url('print_siswa') ?>">Print</a>
+                                <a class="dropdown-item" target="_blank" href="<?= base_url('print_siswa') ?>">Print</a>
                               </div>
                             </div>
                     </div>
